@@ -191,9 +191,8 @@ enchant();
     label_1.moveTo(60, 1000);
     label_1.width = SCREEN_WIDTH * 0.9;
     label_1.height = 500;
-	label_1.color = '#000000';
+    label_1.color = '#000000';
     label_1.font = 'normal normal 70px/1.0 "Arial"';
-    scene.addChild(label_1);
 
     if (data['type'] == 1) {
       //問題文のシーン
@@ -256,24 +255,37 @@ enchant();
 
 
     } else {
-    //通常の会話シーン
+        //通常の会話シーン
+        var str = 0;
+        // セリフは0から
+        var serif_count = 0;
+        if (serif[serif_count] != "" && serif_count < serif_num) {
+            label_1.on('enterframe', function() {
+                if (serif_count < serif.length && str <= serif[serif_count].length) {
+                    label_1.text = serif[serif_count].substring(0,str);
+                    str++;
+                }
+            });
+        }
+        scene.addChild(label_1);
 
-    // セリフは0から
-    var serif_count = 0;
-    //見えないボタン
-    kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    kick_button.moveTo(0, 0);
-    kick_button.ontouchstart = function() {
-      if (serif_count < serif_num) {
-        label_1.text = serif[serif_count];
-        serif_count += 1;
-      } else {
-        next_id = id + 1;
-        console.log("next_id: " + next_id)
-        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
-      }
-    };
-    scene.addChild(kick_button);
+        //見えないボタン
+        kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+        kick_button.moveTo(0, 0);
+        kick_button.ontouchstart = function() {
+          if (serif_count < serif_num) {
+            label_1.text = serif[serif_count];
+            serif_count += 1;
+            if (serif_count < serif_num) {
+              str = 0;
+            }
+          } else {
+            next_id = id + 1;
+            console.log("next_id: " + next_id)
+            game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
+          }
+        };
+        scene.addChild(kick_button);
 
     }
 
