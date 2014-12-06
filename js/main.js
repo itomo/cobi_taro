@@ -51,7 +51,6 @@ var createTitleScene = function() {
 }
 
 var SelectScene = function () {
-  console.log("hoge")
   var scene = new Scene();
   scene.backgroundcolor = 'rgba(230,230,0,1)';
 
@@ -70,6 +69,38 @@ var SelectScene = function () {
   // todo
   // ステージを選択できるようにbuttonを4つ配置する
   // 戻るボタンを機能させる
+
+  var button_width = Math.floor(SCREEN_WIDTH/ LAST_STAGE);    //  各ボタンの幅
+  select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
+  select_button_1.moveTo(0, 0);
+  select_button_1.ontouchstart = function() {
+      game.replaceScene(setupScene(1));
+  };
+  scene.addChild(select_button_1);
+
+  select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
+  start_width_2 = button_width;
+  select_button_2.moveTo(start_width_2, 0);
+  select_button_2.ontouchstart = function() {
+      game.replaceScene(setupScene(2));
+  };
+  scene.addChild(select_button_2);
+
+  select_button_3 = new Sprite(button_width, SCREEN_HEIGHT);
+  start_width_3 = button_width*2;
+  select_button_3.moveTo(start_width_3, 0);
+  select_button_3.ontouchstart = function() {
+      game.replaceScene(setupScene(3));
+  };
+  scene.addChild(select_button_3);
+
+  select_button_4 = new Sprite(button_width, SCREEN_HEIGHT);
+  start_width_4 = button_width*3;
+  select_button_4.moveTo(start_width_4, 0);
+  select_button_4.ontouchstart = function() {
+      game.replaceScene(setupScene(4));
+  };
+  scene.addChild(select_button_4);
 
   // stage.addEventListener(Event.TOUCH_START, function (e) {
   //   game.replaceScene(GameScene());
