@@ -6,8 +6,12 @@ dist_dir = "#{ROOT}/data"
 
 SCENE    = "---scene-"
 QUESTION = "----question"
+SELECT   = "----select"
 ANSWER   = "----answer"
 COMMENT  = "----comment"
+
+SCENE_TYPE_NORMAL   = 0
+SCENE_TYPE_QUESTION = 1
 
 # return chunk = {scene_id => [line,....]}
 def split_scene(str)
@@ -27,6 +31,7 @@ end
 
 def separate_scene_info(scene_info)
   ret = {
+    "type"     => "",
     "serif"    => [],
     "question" => [],
     "select"   => {},
@@ -39,6 +44,8 @@ def separate_scene_info(scene_info)
       before_key = "question"
     elsif line =~ /^#{ANSWER}/
       before_key = "answer"
+    elsif line =~ /^#{SELECT}/
+      before_key = "select"
     elsif line =~ /^#{COMMENT}/
       before_key = "comment"
     else
@@ -55,6 +62,12 @@ def separate_scene_info(scene_info)
       end
     end
   end
+
+  type = SCENE_TYPE_NORMAL
+  unless ret["question"].empty?
+    type = SCENE_TYPE_QUESTION
+  end
+  ret["type"] = type
   ret
 end
 
