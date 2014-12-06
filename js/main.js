@@ -8,8 +8,16 @@ var TITLE_IMG_BACKGROUND = TITLE_IMG_DIR + "/bg_01.jpg";
 var TITLE_IMG_CHARACTER  = TITLE_IMG_DIR + "/chara_01.png";
 var TITLE_IMG_BUTTON     = TITLE_IMG_DIR + "/button_01.png";
 
-var SELECT_IMG_BACKGROUND = SELECT_IMG_DIR + "/bg_01.jpg";
+var SELECT_IMG_BACKGROUND_1 = SELECT_IMG_DIR + "/SelectScene_02.jpg";
+var SELECT_IMG_BACKGROUND_2 = SELECT_IMG_DIR + "/SelectScene_03.jpg";
+var SELECT_IMG_BACKGROUND_3 = SELECT_IMG_DIR + "/SelectScene_04.jpg";
+var SELECT_IMG_BACKGROUND_4 = SELECT_IMG_DIR + "/SelectScene_05.jpg";
 var SELECT_IMG_BUTTON     = SELECT_IMG_DIR + "/button_02.png";
+
+var SELECT_IMG_TOUCH_1 = SELECT_IMG_DIR + "/SelectScene_06.png";
+var SELECT_IMG_TOUCH_2 = SELECT_IMG_DIR + "/SelectScene_07.png";
+var SELECT_IMG_TOUCH_3 = SELECT_IMG_DIR + "/SelectScene_08.png";
+var SELECT_IMG_TOUCH_4 = SELECT_IMG_DIR + "/SelectScene_09.png";
 
 enchant();
 
@@ -58,7 +66,26 @@ var SelectScene = function () {
   scene.addChild(label);
 
   var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-  background.image = game.assets[SELECT_IMG_BACKGROUND];
+
+    //  仮
+    open_stage = 4;
+    switch (open_stage) {
+      case 1:
+        img_path = SELECT_IMG_BACKGROUND_1;
+        break;
+      case 2:
+        img_path = SELECT_IMG_BACKGROUND_2;
+        break;
+      case 3:
+        img_path = SELECT_IMG_BACKGROUND_3;
+        break;
+      case 4:
+        img_path = SELECT_IMG_BACKGROUND_4;
+        break;
+      default:
+        break;
+    }
+  background.image = game.assets[img_path];
   scene.addChild(background)
 
   var backbutton = new Sprite(128, 128);
@@ -74,15 +101,34 @@ var SelectScene = function () {
   select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
   select_button_1.moveTo(0, 0);
   select_button_1.ontouchstart = function() {
-      game.replaceScene(setupScene(1));
+      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+      select_scene.image = game.assets[SELECT_IMG_TOUCH_1];
+      select_scene.moveTo(0, 0);
+      scene.addChild(select_scene);
+      select_scene.tl.moveBy(400,0,5);
+      select_scene.tl.and();
+      select_scene.tl.scaleBy(1.5,5);
+      $.wait(500).done(function(){
+          game.replaceScene(setupScene(1));
+      });
   };
+
   scene.addChild(select_button_1);
 
   select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
   start_width_2 = button_width;
   select_button_2.moveTo(start_width_2, 0);
   select_button_2.ontouchstart = function() {
-      game.replaceScene(setupScene(2));
+      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+      select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
+      select_scene.moveTo(0, 0);
+      scene.addChild(select_scene);
+      select_scene.tl.moveBy(300,0,5);
+      select_scene.tl.and();
+      select_scene.tl.scaleBy(1.5,5);
+      $.wait(500).done(function(){
+          game.replaceScene(setupScene(2));
+      });
   };
   scene.addChild(select_button_2);
 
@@ -90,7 +136,16 @@ var SelectScene = function () {
   start_width_3 = button_width*2;
   select_button_3.moveTo(start_width_3, 0);
   select_button_3.ontouchstart = function() {
-      game.replaceScene(setupScene(3));
+      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+      select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
+      select_scene.moveTo(0, 0);
+      scene.addChild(select_scene);
+      select_scene.tl.moveBy(-200,0,5);
+      select_scene.tl.and();
+      select_scene.tl.scaleBy(1.5,5);
+      $.wait(500).done(function(){
+          game.replaceScene(setupScene(3));
+      });
   };
   scene.addChild(select_button_3);
 
@@ -98,7 +153,16 @@ var SelectScene = function () {
   start_width_4 = button_width*3;
   select_button_4.moveTo(start_width_4, 0);
   select_button_4.ontouchstart = function() {
-      game.replaceScene(setupScene(4));
+      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+      select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
+      select_scene.moveTo(0, 0);
+      scene.addChild(select_scene);
+      select_scene.tl.moveBy(-600,0,5);
+      select_scene.tl.and();
+      select_scene.tl.scaleBy(1.5,5);
+      $.wait(500).done(function(){
+          game.replaceScene(setupScene(4));
+      });
   };
   scene.addChild(select_button_4);
 
@@ -122,8 +186,15 @@ window.onload = function() {
   game.preload(TITLE_IMG_BACKGROUND);
   game.preload(TITLE_IMG_CHARACTER);
   game.preload(TITLE_IMG_BUTTON);
-  game.preload(SELECT_IMG_BACKGROUND);
+  game.preload(SELECT_IMG_BACKGROUND_1);
+  game.preload(SELECT_IMG_BACKGROUND_2);
+  game.preload(SELECT_IMG_BACKGROUND_3);
+  game.preload(SELECT_IMG_BACKGROUND_4);
   game.preload(SELECT_IMG_BUTTON);
+  game.preload(SELECT_IMG_TOUCH_1);
+  game.preload(SELECT_IMG_TOUCH_2);
+  game.preload(SELECT_IMG_TOUCH_3);
+  game.preload(SELECT_IMG_TOUCH_4);
 
   game.onload = function() {
     game.fps = 24;
