@@ -11,6 +11,11 @@ $.wait = function(msec) {
     return d.promise();
 };
 
+function is(type, obj) {
+    var clas = Object.prototype.toString.call(obj).slice(8, -1);
+    return obj !== undefined && obj !== null && clas === type;
+}
+
 var IMG_DIR        = "img";
 var TITLE_IMG_DIR  = IMG_DIR + "/title";
 var SELECT_IMG_DIR = IMG_DIR + "/select";

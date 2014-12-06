@@ -204,6 +204,10 @@ enchant();
       var answer_box_1 = new Sprite(box_x_size, box_y_size)
       answer_box_1.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size, 100);
       answer_box_1.backgroundColor = "rgba(127,255, 212, 0.5)";
+      answer_box_1.ontouchstart = function() {
+        console.log("push 1");
+        checkAnswer(id, 1, data, scene);
+      }
       scene.addChild(answer_box_1);
       var answer_label_1 = new Label();
       answer_label_1.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size + 10, 110);
@@ -211,13 +215,17 @@ enchant();
       answer_label_1.height = box_y_size;
 	  answer_label_1.color = '#000000';
       answer_label_1.font = 'normal normal 70px/1.0 "Arial"';
-      answer_label_1.text = data["select"][1];
+      answer_label_1.text = "① " + data["select"][1];
       scene.addChild(answer_label_1);
 
 
       var answer_box_2 = new Sprite(box_x_size, box_y_size)
       answer_box_2.moveTo(SCREEN_WIDTH/2 + 100, 100);
       answer_box_2.backgroundColor = "rgba(127,255, 212, 0.5)";
+      answer_box_2.ontouchstart = function() {
+        console.log("push 2");
+        checkAnswer(id, 2, data, scene);
+      }
       scene.addChild(answer_box_2);
       var answer_label_2 = new Label();
       answer_label_2.moveTo(SCREEN_WIDTH/2 + 100 + 10, 110);
@@ -225,12 +233,16 @@ enchant();
       answer_label_2.height = box_y_size;
 	  answer_label_2.color = '#000000';
       answer_label_2.font = 'normal normal 70px/1.0 "Arial"';
-      answer_label_2.text = data["select"][2];
+      answer_label_2.text = "② " + data["select"][2];
       scene.addChild(answer_label_2);
 
       var answer_box_3 = new Sprite(box_x_size, box_y_size)
       answer_box_3.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size, 100 + 50 + box_y_size);
       answer_box_3.backgroundColor = "rgba(127,255, 212, 0.5)";
+      answer_box_3.ontouchstart = function() {
+        console.log("push 3");
+        checkAnswer(id, 3, data, scene);
+      }
       scene.addChild(answer_box_3);
       var answer_label_3 = new Label();
       answer_label_3.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size + 10, 100 + 50 + box_y_size + 10);
@@ -238,12 +250,16 @@ enchant();
       answer_label_3.height = box_y_size;
 	  answer_label_3.color = '#000000';
       answer_label_3.font = 'normal normal 70px/1.0 "Arial"';
-      answer_label_3.text = data["select"][3];
+      answer_label_3.text = "③ " + data["select"][3];
       scene.addChild(answer_label_3);
 
       var answer_box_4 = new Sprite(box_x_size, box_y_size)
       answer_box_4.moveTo(SCREEN_WIDTH/2 + 100, 100 + 50 + box_y_size);
       answer_box_4.backgroundColor = "rgba(127,255, 212, 0.5)";
+      answer_box_4.ontouchstart = function() {
+        console.log("push 4");
+        checkAnswer(id, 4, data, scene);
+      }
       scene.addChild(answer_box_4);
       var answer_label_4 = new Label();
       answer_label_4.moveTo(SCREEN_WIDTH/2 + 100 + 10, 100 + 50 + box_y_size + 10);
@@ -251,12 +267,12 @@ enchant();
       answer_label_4.height = box_y_size;
 	  answer_label_4.color = '#000000';
       answer_label_4.font = 'normal normal 70px/1.0 "Arial"';
-      answer_label_4.text = data["select"][4];
+      answer_label_4.text = "④ " + data["select"][4];
       scene.addChild(answer_label_4);
-
 
     } else {
         //通常の会話シーン
+      console.log("normal -----");
         var str = 0;
         // セリフは0から
         var serif_count = 0;
@@ -280,7 +296,7 @@ enchant();
               str = 0;
             }
           } else {
-            next_id = id + 1;
+            next_id = getNextId(id, 0);
             console.log("next_id: " + next_id)
             game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
           }
@@ -296,16 +312,96 @@ enchant();
 //    var max_char = 
   }
 
+  // num: 選択した問題番号
+  var checkAnswer = function(id, num, data, scene) {
+    console.log("checkAnswer")
+    if (num == data['answer']) {
+      //正解
+      var next_id = getNextId(id, 1);
 
+      //きっと正解シーンがでる
+      var box_x_size = SCREEN_WIDTH * 0.6;
+      var box_y_size = SCREEN_HEIGHT * 0.6;
+      var comment_box = new Sprite(box_x_size, box_y_size);
+      comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
+      comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+      comment_box.ontouchstart = function() {
+        console.log("comment_box " + next_id);
+        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho");
+      }
+      scene.addChild(comment_box);
+      var comment_label = new Label();
+      comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
+      comment_label.width = box_x_size * 0.8;
+      comment_label.height = box_y_size * 0.8;
+	  comment_label.color = '#000000';
+      comment_label.font = 'normal normal 70px/1.0 "Arial"';
+      comment_label.text = "正解";
+      scene.addChild(comment_label);
+
+    }else {
+      //失敗
+      var next_id = getNextId(id, 2);
+      //解説の表示
+      var comment = data['comment'].join(" ");
+      var box_x_size = SCREEN_WIDTH * 0.6;
+      var box_y_size = SCREEN_HEIGHT * 0.6;
+      var comment_box = new Sprite(box_x_size, box_y_size);
+      comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
+      comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+      comment_box.ontouchstart = function() {
+        console.log("comment_box " + next_id);
+        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho");
+      }
+      scene.addChild(comment_box);
+      var comment_label = new Label();
+      comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
+      comment_label.width = box_x_size * 0.8;
+      comment_label.height = box_y_size * 0.8;
+	  comment_label.color = '#000000';
+      comment_label.font = 'normal normal 70px/1.0 "Arial"';
+      comment_label.text = comment;
+      scene.addChild(comment_label);
+
+      return scene;
+    }
+
+  }
 
   var getTextLineLevel = function(level) {
     var top = 990;
-    // var bottom = SCREEN_HEIGHT - 30
-    // var space = bottom - top;
-    // var line_num = space / 70;
-
     return top + 90 * level;
   }
+
+  // branch = 1 -> 正解シーンへ
+  // branch = 2 -> 不正解シーン
+  var getNextId = function(now, branch) {
+    var next_id;
+    var now_id = now;
+    if (is('String', now_id) != true) {
+      now_id = now_id + '' //文字列型へ変換
+    }
+    if (now_id.indexOf("-") != -1) {
+      // - がnowに存在する
+      console.log("before now_id: ", now_id);
+      now_id = now_id.replace(/-.*/, '')
+      console.log("replaced now_id: ", now_id);
+    }
+
+    if (branch == 1) {
+      next_id = now_id + "-1";
+    } else if (branch == 2){
+      next_id = now_id + "-2";
+    } else {
+      if (is('Number', now_id) != true) {
+        now_id = Number(now_id);
+      }
+      next_id = now_id + 1;
+    }
+
+    return next_id;
+  }
+
 
 
   // 画像読み込み
