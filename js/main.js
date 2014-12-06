@@ -163,40 +163,16 @@ enchant();
 
     //for (var sid in assets.stage_1) {
     //$.wait(500).done(function(){
-      game.replaceScene(renderingLabel(assets.stage_1[1]), "ho")
+      game.replaceScene(renderingLabel(1, assets.stage_1[1]), "ho")
     //}
     //    }
-
-
-//    game.pushScene(renderingLabel(assets.stage_1[1]['serif'][1], "hoge") )
-
-
-
-
-    // var scenario = new Sprite(1986, 512);
-    // scenario.image = game.assets['img/bord_02.png'];
-    // scenario.moveTo(32, 960);
-    // scene.addChild(scenario);
-
-
-
-    // assets.stage_1.each(function(stage, i) {
-    //   console.log("stage " + stage)
-    //   console.log("i " + i)
-    // });
-    // for (var sid in assets.stage_1) {
-    //   console.log("sid: " + sid);
-    // }
-
-    //return scene;
-
 
   };
 
   var changeStoryScene = function() {
   }
 
-  var renderingLabel = function(data, pic) {
+  var renderingLabel = function(id, data, pic) {
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
@@ -229,7 +205,9 @@ enchant();
         label_1.text = serif[serif_count];
         serif_count += 1;
       } else {
-        
+        next_id = id + 1;
+        console.log("next_id: " + next_id)
+        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
       }
     };
     scene.addChild(kick_button);
