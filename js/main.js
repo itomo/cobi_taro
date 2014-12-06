@@ -193,6 +193,7 @@ enchant();
     label_1.height = 500;
     label_1.color = '#000000';
     label_1.font = 'normal normal 70px/1.0 "Arial"';
+    scene.addChild(label_1);
 
     if (data['type'] == 1) {
       //問題文のシーン
@@ -267,7 +268,6 @@ enchant();
                 }
             });
         }
-        scene.addChild(label_1);
 
         //見えないボタン
         kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -288,7 +288,6 @@ enchant();
         scene.addChild(kick_button);
 
     }
-
 
     return scene;
   }
