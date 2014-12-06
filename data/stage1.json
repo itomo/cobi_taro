@@ -1,0 +1,7 @@
+{
+"1":{"type":"0","serif":["hoge_", "fuga"], "question":["fuga", "poyo"], "select":{"1":"hoge", "2":"fuga"}, "answer":1, "comment":["hoge", "fuga"]},
+"2":{"type":"1","serif":["hoge_", "fuga"], "question":["fuga", "poyo"], "select":{"1":"hoge", "2":"fuga"}, "answer":1, "comment":["hoge", "fuga"]},
+"2_1":{"type":"2","serif":["hoge_", "fuga"], "question":["fuga", "poyo"], "select":{"1":"hoge", "2":"fuga"}, "answer":1, "comment":["hoge", "fuga"]},
+"2_2":{"type":"3","serif":["hoge_", "fuga"], "question":["fuga", "poyo"], "select":{"1":"hoge", "2":"fuga"}, "answer":1, "comment":["hoge", "fuga"]}
+}
+
