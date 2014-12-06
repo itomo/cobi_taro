@@ -32,7 +32,8 @@ enchant();
     button2.image = game.assets[TITLE_IMG_BUTTON];
     button2.moveTo(1164, 1088);
     button2.ontouchstart = function() {
-      game.replaceScene(GameScene());
+        game.replaceScene(SelectScene());
+//      game.replaceScene(GameScene());
     };
     scene.addChild(button2);
 
