@@ -12,6 +12,7 @@ $.wait = function(msec) {
 };
 
 var IMG_DIR        = "img";
+var SOUND_DIR  = "sound";
 var TITLE_IMG_DIR  = IMG_DIR + "/title";
 var SELECT_IMG_DIR = IMG_DIR + "/select";
 var STAGE_IMG_DIR  = IMG_DIR + "/stage";
@@ -29,3 +30,5 @@ var SELECT_IMG_TOUCH_1 = SELECT_IMG_DIR + "/SelectScene_06.png";
 var SELECT_IMG_TOUCH_2 = SELECT_IMG_DIR + "/SelectScene_07.png";
 var SELECT_IMG_TOUCH_3 = SELECT_IMG_DIR + "/SelectScene_08.png";
 var SELECT_IMG_TOUCH_4 = SELECT_IMG_DIR + "/SelectScene_09.png";
+
+var KOBI_SOUND = SOUND_DIR + "/cobi.mp3";
