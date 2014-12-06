@@ -1,0 +1,2 @@
+var SCREEN_WIDTH  = 2048;
+var SCREEN_HEIGHT = 1536;
