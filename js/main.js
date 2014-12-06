@@ -2,6 +2,7 @@ $(function(){
 
 enchant();
 
+
   var open_stage = 1;
   //----- タイトルシーン -----
   var createTitleScene = function() {
@@ -173,14 +174,17 @@ enchant();
   //----- ステージシーンのセットアップ
   var setupScene = function(id) {
 
-    game.replaceScene(renderingLabel(1, assets.stage_1[1]), "ho")
+    // 問題ミスのフラグを初期化
+    strage.failed_ans = 0;
+    game.replaceScene(renderingLabel(1, 1, assets.stage_1[1]), "ho")
 
   };
 
   var changeStoryScene = function() {
   }
 
-  var renderingLabel = function(id, data, pic) {
+
+  var renderingLabel = function(stage_id, id, data, pic) {
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
@@ -214,7 +218,7 @@ enchant();
       answer_box_1.backgroundColor = "rgba(127,255, 212, 0.5)";
       answer_box_1.ontouchstart = function() {
         console.log("push 1");
-        checkAnswer(id, 1, data, scene);
+        checkAnswer(stage_id, id, 1, data, scene);
       }
       scene.addChild(answer_box_1);
       var answer_label_1 = new Label();
@@ -232,7 +236,7 @@ enchant();
       answer_box_2.backgroundColor = "rgba(127,255, 212, 0.5)";
       answer_box_2.ontouchstart = function() {
         console.log("push 2");
-        checkAnswer(id, 2, data, scene);
+        checkAnswer(stage_id, id, 2, data, scene);
       }
       scene.addChild(answer_box_2);
       var answer_label_2 = new Label();
@@ -249,7 +253,7 @@ enchant();
       answer_box_3.backgroundColor = "rgba(127,255, 212, 0.5)";
       answer_box_3.ontouchstart = function() {
         console.log("push 3");
-        checkAnswer(id, 3, data, scene);
+        checkAnswer(stage_id, id, 3, data, scene);
       }
       scene.addChild(answer_box_3);
       var answer_label_3 = new Label();
@@ -266,7 +270,7 @@ enchant();
       answer_box_4.backgroundColor = "rgba(127,255, 212, 0.5)";
       answer_box_4.ontouchstart = function() {
         console.log("push 4");
-        checkAnswer(id, 4, data, scene);
+        checkAnswer(stage_id, id, 4, data, scene);
       }
       scene.addChild(answer_box_4);
       var answer_label_4 = new Label();
@@ -294,7 +298,7 @@ enchant();
         }
 
         //見えないボタン
-        kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+        var kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
         kick_button.moveTo(0, 0);
         kick_button.ontouchstart = function() {
           if (serif_count < serif_num) {
@@ -304,9 +308,17 @@ enchant();
               str = 0;
             }
           } else {
-            next_id = getNextId(id, 0);
-            console.log("next_id: " + next_id)
-            game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
+            if (isLastStage(stage_id, id)) {
+              //ここが最終ステージ
+              console.log("last stage now id: " + id)
+              game.replaceScene(renderingLastScene(stage_id, id, data));
+            } else {
+              //次もある
+              next_id = getNextId(id, 0);
+              console.log("next_id: " + next_id)
+              game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+            }
+
           }
         };
         scene.addChild(kick_button);
@@ -316,13 +328,86 @@ enchant();
     return scene;
   }
 
-  var chompText = function(text) {
-//    var max_char = 
-  }
+  // 最終ステージの描画
+  var renderingLastScene = function(stage_id, id, data) {
+    var next_id;
+    var succes;
+    if (strage.failed_ans == 1) {
+      // 失敗
+      next_id = getNextId(id, 2);
+    } else {
+      // 成功
+      next_id = getNextId(id, 1)
+    }
+
+    console.log("renderingLastScene next_id: " + next_id + " id: " + id);
+    var last_data = assets.stage_1[next_id];
+
+    var scene = new Scene();
+    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
+    background.x = 0;
+    background.y = 0;
+    scene.addChild(background);
+
+    var scenario = new Sprite(1986, 512);
+    scenario.image = game.assets['img/bord_02.png'];
+    scenario.moveTo(32, 960);
+    scene.addChild(scenario);
+
+    var serif = last_data["serif"];
+    var serif_num = serif.length;
+    var label_1 = new Label();
+    label_1.moveTo(60, 1000);
+    label_1.width = SCREEN_WIDTH * 0.9;
+    label_1.height = 500;
+    label_1.color = '#000000';
+    label_1.font = 'normal normal 70px/1.0 "Arial"';
+    scene.addChild(label_1);
+
+    //通常の会話シーン
+    console.log("last scene -----");
+    var str = 0;
+    // セリフは0から
+    var serif_count = 0;
+    if (serif[serif_count] != "" && serif_count < serif_num) {
+      label_1.on('enterframe', function() {
+        if (serif_count < serif.length && str <= serif[serif_count].length) {
+          label_1.text = serif[serif_count].substring(0,str);
+          str++;
+        }
+      });
+    }
+
+    //見えないボタン
+    var kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    kick_button.moveTo(0, 0);
+    kick_button.ontouchstart = function() {
+      if (serif_count < serif_num) {
+        label_1.text = serif[serif_count];
+        serif_count += 1;
+        if (serif_count < serif_num) {
+          str = 0;
+        }
+      } else {
+        // 会話を表示させきったので選択画面へ
+        console.log()
+        if (strage.failed_ans == 0) {
+          strage.open_stage = strage.open_stage + 1;
+        }
+        game.replaceScene(SelectScene());
+
+      }
+    };
+    scene.addChild(kick_button);
+
+    return scene;
+  };
+
 
   // num: 選択した問題番号
-  var checkAnswer = function(id, num, data, scene) {
-    console.log("checkAnswer")
+  var checkAnswer = function(stage_id, id, num, data, scene) {
+    console.log("checkAnswer num: " + num + "data['answer']: " + data['answer'])
     if (num == data['answer']) {
       //正解
       var next_id = getNextId(id, 1);
@@ -334,8 +419,14 @@ enchant();
       comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
       comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
       comment_box.ontouchstart = function() {
-        console.log("comment_box " + next_id);
-        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho");
+        if (isLastStage(stage_id, id)) {
+          //ここが最終ステージ
+          console.log("last stage now id: " + id)
+          game.replaceScene(renderingLastScene(stage_id, id, data));
+        } else {
+          console.log("comment_box " + next_id);
+          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+        }
       }
       scene.addChild(comment_box);
       var comment_label = new Label();
@@ -350,6 +441,10 @@ enchant();
     }else {
       //失敗
       var next_id = getNextId(id, 2);
+
+      // 問題ミスのフラグオン
+      strage.failed_ans = 1;
+
       //解説の表示
       var comment = data['comment'].join(" ");
       var box_x_size = SCREEN_WIDTH * 0.6;
@@ -358,8 +453,14 @@ enchant();
       comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
       comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
       comment_box.ontouchstart = function() {
-        console.log("comment_box " + next_id);
-        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho");
+        if (isLastStage(stage_id, id)) {
+          //ここが最終ステージ
+          console.log("last stage now id: " + id)
+          game.replaceScene(renderingLastScene(stage_id, id, data));
+        } else {
+          console.log("comment_box " + next_id);
+          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+        }
       }
       scene.addChild(comment_box);
       var comment_label = new Label();
@@ -387,12 +488,12 @@ enchant();
     var next_id;
     var now_id = now;
     if (is('String', now_id) != true) {
-      now_id = now_id + '' //文字列型へ変換
+      now_id = now_id + ''; //文字列型へ変換
     }
     if (now_id.indexOf("-") != -1) {
       // - がnowに存在する
       console.log("before now_id: ", now_id);
-      now_id = now_id.replace(/-.*/, '')
+      now_id = now_id.replace(/-.*/, '');
       console.log("replaced now_id: ", now_id);
     }
 
@@ -409,6 +510,28 @@ enchant();
 
     return next_id;
   }
+
+  // 最終ステージ化確認する
+  var isLastStage = function(stage_id, now) {
+    var now_id = now;
+    var now_id_num;
+    if (is('String', now_id) != true) {
+      now_id = now_id + '';
+    }
+    now_id_num = now_id.replace(/-.*/, '');
+
+    if (is('Number', now_id_num) != true) {
+      now_id_num = Number(now_id_num);
+    }
+    if (now_id_num == assets.laststage[stage_id]) {
+      return true;
+    } else {
+      return false;
+    }
+
+
+  }
+
 
 
 
