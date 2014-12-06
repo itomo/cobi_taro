@@ -11,6 +11,18 @@ var TITLE_IMG_BUTTON     = TITLE_IMG_DIR + "/button_01.png";
 var SELECT_IMG_BACKGROUND = SELECT_IMG_DIR + "/bg_01.jpg";
 var SELECT_IMG_BUTTON     = SELECT_IMG_DIR + "/button_02.png";
 
+//  画像がないので仮
+var SELECT_IMG_TOUCH1 = IMG_DIR + "/bg_13.jpg";
+var SELECT_IMG_TOUCH2 = IMG_DIR + "/bg_13.jpg";
+var SELECT_IMG_TOUCH3 = IMG_DIR + "/bg_13.jpg";
+var SELECT_IMG_TOUCH4 = IMG_DIR + "/bg_13.jpg";
+/*
+var SELECT_IMG_TOUCH1 = SELECT_IMG_DIR + "/bg_touch_01.jpg";
+var SELECT_IMG_TOUCH2 = SELECT_IMG_DIR + "/bg_touch_02.jpg";
+var SELECT_IMG_TOUCH3 = SELECT_IMG_DIR + "/bg_touch_03.jpg";
+var SELECT_IMG_TOUCH4 = SELECT_IMG_DIR + "/bg_touch_04.jpg";
+*/
+
 enchant();
 
 var createTitleScene = function() {
@@ -74,6 +86,9 @@ var SelectScene = function () {
   select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
   select_button_1.moveTo(0, 0);
   select_button_1.ontouchstart = function() {
+      background.image = game.assets[SELECT_IMG_TOUCH1];
+  };
+  select_button_1.ontouchend = function() {
       game.replaceScene(setupScene(1));
   };
   scene.addChild(select_button_1);
@@ -82,6 +97,9 @@ var SelectScene = function () {
   start_width_2 = button_width;
   select_button_2.moveTo(start_width_2, 0);
   select_button_2.ontouchstart = function() {
+      background.image = game.assets[SELECT_IMG_TOUCH2];
+  };
+  select_button_2.ontouchend = function() {
       game.replaceScene(setupScene(2));
   };
   scene.addChild(select_button_2);
@@ -90,6 +108,9 @@ var SelectScene = function () {
   start_width_3 = button_width*2;
   select_button_3.moveTo(start_width_3, 0);
   select_button_3.ontouchstart = function() {
+      background.image = game.assets[SELECT_IMG_TOUCH3];
+  };
+  select_button_3.ontouchend = function() {
       game.replaceScene(setupScene(3));
   };
   scene.addChild(select_button_3);
@@ -98,6 +119,9 @@ var SelectScene = function () {
   start_width_4 = button_width*3;
   select_button_4.moveTo(start_width_4, 0);
   select_button_4.ontouchstart = function() {
+      background.image = game.assets[SELECT_IMG_TOUCH4];
+  };
+  select_button_4.ontouchend = function() {
       game.replaceScene(setupScene(4));
   };
   scene.addChild(select_button_4);
@@ -124,6 +148,10 @@ window.onload = function() {
   game.preload(TITLE_IMG_BUTTON);
   game.preload(SELECT_IMG_BACKGROUND);
   game.preload(SELECT_IMG_BUTTON);
+  game.preload(SELECT_IMG_TOUCH1);
+  game.preload(SELECT_IMG_TOUCH2);
+  game.preload(SELECT_IMG_TOUCH3);
+  game.preload(SELECT_IMG_TOUCH4);
 
   game.onload = function() {
     game.fps = 24;
