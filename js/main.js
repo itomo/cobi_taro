@@ -11,10 +11,9 @@ window.onload = function () {
 
         var TitleScene = function () {
             var scene = new Scene();
-            var label = new Label('?≥„?Â§??~ep.0~');
+            var label = new Label('„Ç≥„ÉìÂ§™ÈÉé~ep.0~');
 
             scene.addChild(label);
-
 
             var bg1 = new Sprite(2048, 1536);
             bg1.image = game.assets['img/bg_01.png'];
@@ -51,7 +50,7 @@ window.onload = function () {
 
         var SelectScene = function () {
             var scene = new Scene();
-            var label = new Label('?π„??º„??ªÈ?');
+            var label = new Label('„Çπ„ÉÜ„Éº„Ç∏ÁîªÈù¢');
 
             scene.addChild(label);
             scene.backgroundcolor = 'rgba(230,230,0,1)';
@@ -79,7 +78,7 @@ window.onload = function () {
 
         var GameScene = function () {
             var scene = new Scene();
-            var label = new Label('?≤„??????);
+            var label = new Label('„Ç≤„Éº„É†ÁîªÈù¢');
 
             scene.addChild(label);
             scene.backgroundcolor = 'rgba(200,230,0,1)';
@@ -118,7 +117,7 @@ window.onload = function () {
 
         var GameClearScene = function () {
             var scene = new Scene();
-            var label = new Label('Ôº???º„??????);
+            var label = new Label('Ôºë„Ç≤„Éº„É†„ÇØ„É™„Ç¢');
 
             scene.addChild(label);
             scene.backgroundcolor = 'rgba(180,230,0,1)';
