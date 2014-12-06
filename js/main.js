@@ -2,6 +2,7 @@ $(function(){
 
 enchant();
 
+  var open_stage = 1;
   //----- タイトルシーン -----
   var createTitleScene = function() {
     var scene = new Scene();
@@ -32,7 +33,8 @@ enchant();
     button2.image = game.assets[TITLE_IMG_BUTTON];
     button2.moveTo(1164, 1088);
     button2.ontouchstart = function() {
-      game.replaceScene(GameScene());
+        game.replaceScene(SelectScene());
+//      game.replaceScene(GameScene());
     };
     scene.addChild(button2);
 
@@ -50,7 +52,6 @@ enchant();
     scene.addChild(label);
 
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    open_stage = 4;
     switch (open_stage) {
     case 1:
       img_path = SELECT_IMG_BACKGROUND_1;
@@ -79,6 +80,7 @@ enchant();
     select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
     select_button_1.moveTo(0, 0);
     select_button_1.ontouchstart = function() {
+      scene.removeChild(this);
       select_bgm.play();
       $.wait(500).done(function(){
         select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -95,65 +97,76 @@ enchant();
     };
     scene.addChild(select_button_1);
 
-    select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
-    start_width_2 = button_width;
-    select_button_2.moveTo(start_width_2, 0);
-    select_button_2.ontouchstart = function() {
-      select_bgm.play();
-      $.wait(500).done(function(){
-        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-        select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
-        select_scene.moveTo(0, 0);
-        scene.addChild(select_scene);
-        select_scene.tl.moveBy(300,0,5);
-        select_scene.tl.and();
-        select_scene.tl.scaleBy(1.5,5);
-          $.wait(500).done(function(){
-            setupScene(2);
-          });
-      });
-    };
-    scene.addChild(select_button_2);
-
-    select_button_3 = new Sprite(button_width, SCREEN_HEIGHT);
-    start_width_3 = button_width*2;
-    select_button_3.moveTo(start_width_3, 0);
-    select_button_3.ontouchstart = function() {
-      select_bgm.play();
-      $.wait(500).done(function(){
-        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-        select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
-        select_scene.moveTo(0, 0);
-        scene.addChild(select_scene);
-        select_scene.tl.moveBy(-200,0,5);
-        select_scene.tl.and();
-        select_scene.tl.scaleBy(1.5,5);
-          $.wait(500).done(function(){
-            setupScene(3);
-          });
-      });
-    };
-    scene.addChild(select_button_3);
-
-    select_button_4 = new Sprite(button_width, SCREEN_HEIGHT);
-    start_width_4 = button_width*3;
-    select_button_4.moveTo(start_width_4, 0);
-    select_button_4.ontouchstart = function() {
-      select_bgm.play();
-      $.wait(500).done(function(){
+    if (open_stage > 1) {
+      select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
+      start_width_2 = button_width;
+      select_button_2.moveTo(start_width_2, 0);
+      select_button_2.ontouchstart = function() {
+        scene.removeChild(this);
+        select_bgm.play();
+        $.wait(500).done(function(){
           select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-          select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
+          select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
           select_scene.moveTo(0, 0);
           scene.addChild(select_scene);
-          select_scene.tl.moveBy(-600,0,5);
+          select_scene.tl.moveBy(300,0,5);
           select_scene.tl.and();
           select_scene.tl.scaleBy(1.5,5);
-          $.wait(500).done(function(){
-            setupScene(4);
-          });
-      });
-    };
-    scene.addChild(select_button_4);
+            $.wait(500).done(function(){
+              setupScene(2);
+            });
+        });
+      };
+      scene.addChild(select_button_2);
+    }
+
+
+    if (open_stage > 2) {
+      select_button_3 = new Sprite(button_width, SCREEN_HEIGHT);
+      start_width_3 = button_width*2;
+      select_button_3.moveTo(start_width_3, 0);
+      select_button_3.ontouchstart = function() {
+        scene.removeChild(this);
+        select_bgm.play();
+        $.wait(500).done(function(){
+          select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+          select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
+          select_scene.moveTo(0, 0);
+          scene.addChild(select_scene);
+          select_scene.tl.moveBy(-200,0,5);
+          select_scene.tl.and();
+          select_scene.tl.scaleBy(1.5,5);
+            $.wait(500).done(function(){
+              setupScene(3);
+            });
+        });
+      };
+      scene.addChild(select_button_3);
+    }
+
+
+    if (open_stage > 3) {
+      select_button_4 = new Sprite(button_width, SCREEN_HEIGHT);
+      start_width_4 = button_width*3;
+      select_button_4.moveTo(start_width_4, 0);
+      select_button_4.ontouchstart = function() {
+        scene.removeChild(this);
+        select_bgm.play();
+        $.wait(500).done(function(){
+            select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+            select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
+            select_scene.moveTo(0, 0);
+            scene.addChild(select_scene);
+            select_scene.tl.moveBy(-600,0,5);
+            select_scene.tl.and();
+            select_scene.tl.scaleBy(1.5,5);
+            $.wait(500).done(function(){
+              setupScene(4);
+            });
+        });
+      };
+      scene.addChild(select_button_4);
+    }
 
     return scene;
   };
