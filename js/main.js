@@ -161,9 +161,11 @@ enchant();
 
 
 
-    for (var sid in assets.stage_1) {
-      game.replaceScene(renderingLabel(assets.stage_1[sid]), "ho")
-    }
+    //for (var sid in assets.stage_1) {
+    //$.wait(500).done(function(){
+      game.replaceScene(renderingLabel(assets.stage_1[1]), "ho")
+    //}
+    //    }
 
 
 //    game.pushScene(renderingLabel(assets.stage_1[1]['serif'][1], "hoge") )
@@ -195,7 +197,6 @@ enchant();
   }
 
   var renderingLabel = function(data, pic) {
-    console.log(data);
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
@@ -203,26 +204,53 @@ enchant();
     background.y = 0;
     scene.addChild(background);
 
-    var label = new Label();
-    label.moveTo(32, 960);
-    label.font = '70px "Arial"';
-    scene.addChild(label);
-
     var scenario = new Sprite(1986, 512);
     scenario.image = game.assets['img/bord_02.png'];
     scenario.moveTo(32, 960);
     scene.addChild(scenario);
 
     var serif = data["serif"];
-    for (var sid in serif) {
-      $.wait(500).done(function(){
-        label.text = serif[sid];
-      });
-    }
+    var serif_num = serif.length;
+    var label_1 = new Label();
+    label_1.moveTo(60, 1000);
+    label_1.width = SCREEN_WIDTH * 0.9;
+    label_1.height = 500;
+	label_1.color = '#000000';
+    label_1.font = 'normal normal 70px/1.0 "Arial"';
+    scene.addChild(label_1);
 
-
+    // セリフは0から
+    var serif_count = 0;
+    //見えないボタン
+    kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    kick_button.moveTo(0, 0);
+    kick_button.ontouchstart = function() {
+      if (serif_count < serif_num) {
+        label_1.text = serif[serif_count];
+        serif_count += 1;
+      } else {
+        
+      }
+    };
+    scene.addChild(kick_button);
     return scene;
   }
+
+  var chompText = function(text) {
+//    var max_char = 
+  }
+
+
+
+  var getTextLineLevel = function(level) {
+    var top = 990;
+    // var bottom = SCREEN_HEIGHT - 30
+    // var space = bottom - top;
+    // var line_num = space / 70;
+
+    return top + 90 * level;
+  }
+
 
   // 画像読み込み
 
