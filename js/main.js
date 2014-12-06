@@ -7,7 +7,6 @@ enchant();
     var scene = new Scene();
     var label = new Label('コビ太郎~ep.0~');
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-
     // 背景
     background.image = game.assets[TITLE_IMG_BACKGROUND];
     scene.addChild(background);
@@ -43,6 +42,8 @@ enchant();
   //----- ステージ選択シーン -----
   var SelectScene = function () {
     var scene = new Scene();
+    var select_bgm = game.assets[KOBI_SOUND];
+
     scene.backgroundcolor = 'rgba(230,230,0,1)';
 
     var label = new Label('ステージ画面');
@@ -78,15 +79,18 @@ enchant();
     select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
     select_button_1.moveTo(0, 0);
     select_button_1.ontouchstart = function() {
-      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-      select_scene.image = game.assets[SELECT_IMG_TOUCH_1];
-      select_scene.moveTo(0, 0);
-      scene.addChild(select_scene);
-      select_scene.tl.moveBy(400,0,5);
-      select_scene.tl.and();
-      select_scene.tl.scaleBy(1.5,5);
+      select_bgm.play();
       $.wait(500).done(function(){
-        setupScene(1);
+        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+        select_scene.image = game.assets[SELECT_IMG_TOUCH_1];
+        select_scene.moveTo(0, 0);
+        scene.addChild(select_scene);
+        select_scene.tl.moveBy(400,0,5);
+        select_scene.tl.and();
+        select_scene.tl.scaleBy(1.5,5);
+        $.wait(500).done(function(){
+          setupScene(1);
+        });
       });
     };
     scene.addChild(select_button_1);
@@ -95,15 +99,18 @@ enchant();
     start_width_2 = button_width;
     select_button_2.moveTo(start_width_2, 0);
     select_button_2.ontouchstart = function() {
-      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-      select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
-      select_scene.moveTo(0, 0);
-      scene.addChild(select_scene);
-      select_scene.tl.moveBy(300,0,5);
-      select_scene.tl.and();
-      select_scene.tl.scaleBy(1.5,5);
+      select_bgm.play();
       $.wait(500).done(function(){
-        setupScene(2);
+        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+        select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
+        select_scene.moveTo(0, 0);
+        scene.addChild(select_scene);
+        select_scene.tl.moveBy(300,0,5);
+        select_scene.tl.and();
+        select_scene.tl.scaleBy(1.5,5);
+          $.wait(500).done(function(){
+            setupScene(2);
+          });
       });
     };
     scene.addChild(select_button_2);
@@ -112,15 +119,18 @@ enchant();
     start_width_3 = button_width*2;
     select_button_3.moveTo(start_width_3, 0);
     select_button_3.ontouchstart = function() {
-      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-      select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
-      select_scene.moveTo(0, 0);
-      scene.addChild(select_scene);
-      select_scene.tl.moveBy(-200,0,5);
-      select_scene.tl.and();
-      select_scene.tl.scaleBy(1.5,5);
+      select_bgm.play();
       $.wait(500).done(function(){
-        setupScene(3);
+        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+        select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
+        select_scene.moveTo(0, 0);
+        scene.addChild(select_scene);
+        select_scene.tl.moveBy(-200,0,5);
+        select_scene.tl.and();
+        select_scene.tl.scaleBy(1.5,5);
+          $.wait(500).done(function(){
+            setupScene(3);
+          });
       });
     };
     scene.addChild(select_button_3);
@@ -129,17 +139,22 @@ enchant();
     start_width_4 = button_width*3;
     select_button_4.moveTo(start_width_4, 0);
     select_button_4.ontouchstart = function() {
-      select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-      select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
-      select_scene.moveTo(0, 0);
-      scene.addChild(select_scene);
-      select_scene.tl.moveBy(-600,0,5);
-      select_scene.tl.and();
-      select_scene.tl.scaleBy(1.5,5);
+      select_bgm.play();
       $.wait(500).done(function(){
-        setupScene(4);
+          select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+          select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
+          select_scene.moveTo(0, 0);
+          scene.addChild(select_scene);
+          select_scene.tl.moveBy(-600,0,5);
+          select_scene.tl.and();
+          select_scene.tl.scaleBy(1.5,5);
+          $.wait(500).done(function(){
+            setupScene(4);
+          });
       });
     };
+    scene.addChild(select_button_4);
+
     return scene;
   };
 
@@ -374,6 +389,8 @@ enchant();
     game.preload(SELECT_IMG_TOUCH_2);
     game.preload(SELECT_IMG_TOUCH_3);
     game.preload(SELECT_IMG_TOUCH_4);
+
+    game.preload(KOBI_SOUND);
 
     game.onload = function() {
       game.fps = 24;
