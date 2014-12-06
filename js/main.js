@@ -163,40 +163,16 @@ enchant();
 
     //for (var sid in assets.stage_1) {
     //$.wait(500).done(function(){
-      game.replaceScene(renderingLabel(assets.stage_1[1]), "ho")
+    game.replaceScene(renderingLabel(1, assets.stage_1[1]), "ho")
     //}
     //    }
-
-
-//    game.pushScene(renderingLabel(assets.stage_1[1]['serif'][1], "hoge") )
-
-
-
-
-    // var scenario = new Sprite(1986, 512);
-    // scenario.image = game.assets['img/bord_02.png'];
-    // scenario.moveTo(32, 960);
-    // scene.addChild(scenario);
-
-
-
-    // assets.stage_1.each(function(stage, i) {
-    //   console.log("stage " + stage)
-    //   console.log("i " + i)
-    // });
-    // for (var sid in assets.stage_1) {
-    //   console.log("sid: " + sid);
-    // }
-
-    //return scene;
-
 
   };
 
   var changeStoryScene = function() {
   }
 
-  var renderingLabel = function(data, pic) {
+  var renderingLabel = function(id, data, pic) {
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
@@ -219,6 +195,69 @@ enchant();
     label_1.font = 'normal normal 70px/1.0 "Arial"';
     scene.addChild(label_1);
 
+    if (data['type'] == 1) {
+      //問題文のシーン
+      label_1.text = data["question"][0];
+      box_x_size = SCREEN_WIDTH / 4 * 1.5;
+      box_y_size = (SCREEN_HEIGHT - 500)/ 2 * 0.7;
+
+      var answer_box_1 = new Sprite(box_x_size, box_y_size)
+      answer_box_1.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size, 100);
+      answer_box_1.backgroundColor = "rgba(127,255, 212, 0.5)";
+      scene.addChild(answer_box_1);
+      var answer_label_1 = new Label();
+      answer_label_1.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size + 10, 110);
+      answer_label_1.width = box_x_size;
+      answer_label_1.height = box_y_size;
+	  answer_label_1.color = '#000000';
+      answer_label_1.font = 'normal normal 70px/1.0 "Arial"';
+      answer_label_1.text = data["select"][1];
+      scene.addChild(answer_label_1);
+
+
+      var answer_box_2 = new Sprite(box_x_size, box_y_size)
+      answer_box_2.moveTo(SCREEN_WIDTH/2 + 100, 100);
+      answer_box_2.backgroundColor = "rgba(127,255, 212, 0.5)";
+      scene.addChild(answer_box_2);
+      var answer_label_2 = new Label();
+      answer_label_2.moveTo(SCREEN_WIDTH/2 + 100 + 10, 110);
+      answer_label_2.width = box_x_size;
+      answer_label_2.height = box_y_size;
+	  answer_label_2.color = '#000000';
+      answer_label_2.font = 'normal normal 70px/1.0 "Arial"';
+      answer_label_2.text = data["select"][2];
+      scene.addChild(answer_label_2);
+
+      var answer_box_3 = new Sprite(box_x_size, box_y_size)
+      answer_box_3.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size, 100 + 50 + box_y_size);
+      answer_box_3.backgroundColor = "rgba(127,255, 212, 0.5)";
+      scene.addChild(answer_box_3);
+      var answer_label_3 = new Label();
+      answer_label_3.moveTo(SCREEN_WIDTH/2 - 100 - box_x_size + 10, 100 + 50 + box_y_size + 10);
+      answer_label_3.width = box_x_size;
+      answer_label_3.height = box_y_size;
+	  answer_label_3.color = '#000000';
+      answer_label_3.font = 'normal normal 70px/1.0 "Arial"';
+      answer_label_3.text = data["select"][3];
+      scene.addChild(answer_label_3);
+
+      var answer_box_4 = new Sprite(box_x_size, box_y_size)
+      answer_box_4.moveTo(SCREEN_WIDTH/2 + 100, 100 + 50 + box_y_size);
+      answer_box_4.backgroundColor = "rgba(127,255, 212, 0.5)";
+      scene.addChild(answer_box_4);
+      var answer_label_4 = new Label();
+      answer_label_4.moveTo(SCREEN_WIDTH/2 + 100 + 10, 100 + 50 + box_y_size + 10);
+      answer_label_4.width = box_x_size;
+      answer_label_4.height = box_y_size;
+	  answer_label_4.color = '#000000';
+      answer_label_4.font = 'normal normal 70px/1.0 "Arial"';
+      answer_label_4.text = data["select"][4];
+      scene.addChild(answer_label_4);
+
+
+    } else {
+    //通常の会話シーン
+
     // セリフは0から
     var serif_count = 0;
     //見えないボタン
@@ -229,10 +268,16 @@ enchant();
         label_1.text = serif[serif_count];
         serif_count += 1;
       } else {
-        
+        next_id = id + 1;
+        console.log("next_id: " + next_id)
+        game.replaceScene(renderingLabel(next_id, assets.stage_1[next_id]), "ho")
       }
     };
     scene.addChild(kick_button);
+
+    }
+
+
     return scene;
   }
 
