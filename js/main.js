@@ -52,7 +52,8 @@ enchant();
     scene.addChild(label);
 
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    switch (open_stage) {
+
+    switch (strage.open_stage) {
     case 1:
       img_path = SELECT_IMG_BACKGROUND_1;
       break;
@@ -97,7 +98,7 @@ enchant();
     };
     scene.addChild(select_button_1);
 
-    if (open_stage > 1) {
+    if (strage.open_stage > 1) {
       select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
       start_width_2 = button_width;
       select_button_2.moveTo(start_width_2, 0);
@@ -120,8 +121,7 @@ enchant();
       scene.addChild(select_button_2);
     }
 
-
-    if (open_stage > 2) {
+    if (strage.open_stage > 2) {
       select_button_3 = new Sprite(button_width, SCREEN_HEIGHT);
       start_width_3 = button_width*2;
       select_button_3.moveTo(start_width_3, 0);
@@ -144,8 +144,7 @@ enchant();
       scene.addChild(select_button_3);
     }
 
-
-    if (open_stage > 3) {
+    if (strage.open_stage > 3) {
       select_button_4 = new Sprite(button_width, SCREEN_HEIGHT);
       start_width_4 = button_width*3;
       select_button_4.moveTo(start_width_4, 0);
@@ -173,27 +172,8 @@ enchant();
 
   //----- ステージシーンのセットアップ
   var setupScene = function(id) {
-    // file = "data/" + "stage" + id + ".json";
-    // $.getJSON(file , function(data) {
-    //   createScene(id, data);
-    // });
-//    console.log(assets.stage_1);
 
-
-    // var scene = new Scene();
-    // var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    // background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
-    // background.x = 0;
-    // background.y = 0;
-    // scene.addChild(background);
-
-
-
-    //for (var sid in assets.stage_1) {
-    //$.wait(500).done(function(){
     game.replaceScene(renderingLabel(1, assets.stage_1[1]), "ho")
-    //}
-    //    }
 
   };
 
