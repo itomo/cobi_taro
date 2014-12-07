@@ -40,3 +40,7 @@ var SELECT_IMG_TOUCH_4 = SELECT_IMG_DIR + "/SelectScene_09.png";
 var STAGE_IMG_CUTIN = STAGE_IMG_DIR + "/cutin.png";
 
 var KOBI_SOUND = SOUND_DIR + "/cobi.mp3";
+
+var SE_SOUND_1 = SOUND_DIR + "/se_01.mp3";
+var SE_SOUND_2 = SOUND_DIR + "/se_02.mp3";
+var SE_SOUND_3 = SOUND_DIR + "/se_03.mp3";

@@ -567,6 +567,28 @@ enchant();
     //   createSingleScene(i, data);
     // });
   }
+
+  //----- エンディングシーン -----
+  var createEndingScene = function() {
+    var scene = new Scene();
+    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    // 背景
+    background.backgroundColor= 'rgba(0,0,0,1)';
+    scene.addChild(background);
+
+    // 文字
+    var text = new Label('コビ太郎~ep.0~');
+    text.moveTo(800, 1000);
+    text.width = SCREEN_WIDTH * 0.9;
+    text.height = 500;
+    text.color = '#FFFFFF';
+    text.font = 'normal normal 70px/1.0 "Arial"';
+    scene.addChild(text);
+    text.tl.moveBy(0,-2000,100);
+
+    return scene;
+  }
+
   var createSingleScene = function(id, data) {
     var scene = new Scene();
     var label = new Label('コビ太郎~ep.0~');
@@ -613,9 +635,13 @@ enchant();
     game.preload(STAGE_IMG_CUTIN);
 
     game.preload(KOBI_SOUND);
+    game.preload(SE_SOUND_1);
+    game.preload(SE_SOUND_2);
+    game.preload(SE_SOUND_3);
 
     game.onload = function() {
       game.fps = 24;
+//      game.replaceScene(createEndingScene());
       game.replaceScene(createTitleScene());
     };
     game.start();
