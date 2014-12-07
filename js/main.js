@@ -12,13 +12,20 @@ enchant();
     background.image = game.assets[TITLE_IMG_BACKGROUND];
     scene.addChild(background);
 
-    // 人物
+
     var chara = new Sprite(520, 748);
     chara.image = game.assets[TITLE_IMG_CHARACTER];
     chara.moveTo(800, 250);
     chara.scaleX = 1.3;
     chara.scaleY = 1.3;
     scene.addChild(chara);
+
+    var title = new Sprite(1152, 256);
+    title.image = game.assets[TITLE_IMG_TEXT];
+    title.moveTo(700,568);
+    title.scaleX = 2.2;
+    title.scaleY = 2.2;
+    scene.addChild(title);
 
     // ボタン
     var button1 = new Sprite(764, 384);
@@ -406,72 +413,78 @@ enchant();
   // num: 選択した問題番号
   var checkAnswer = function(stage_id, id, num, data, scene) {
     console.log("checkAnswer num: " + num + "data['answer']: " + data['answer'])
-    if (num == data['answer']) {
-      //正解
-      var next_id = getNextId(id, 1);
+    //  cut in
 
-      //きっと正解シーンがでる
-      var box_x_size = SCREEN_WIDTH * 0.6;
-      var box_y_size = SCREEN_HEIGHT * 0.6;
-      var comment_box = new Sprite(box_x_size, box_y_size);
-      comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
-      comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
-      comment_box.ontouchstart = function() {
-        if (isLastStage(stage_id, id)) {
-          //ここが最終ステージ
-          console.log("last stage now id: " + id)
-          game.replaceScene(renderingLastScene(stage_id, id, data));
-        } else {
-          console.log("comment_box " + next_id);
-          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+    var cut_in = new Sprite(2024, 748);
+    cut_in.image = game.assets[STAGE_IMG_CUTIN];
+    cut_in.moveTo(20, 150);
+    $.wait(500).done(function(){
+      if (num == data['answer']) {
+        //正解
+        var next_id = getNextId(id, 1);
+
+        //きっと正解シーンがでる
+        var box_x_size = SCREEN_WIDTH * 0.6;
+        var box_y_size = SCREEN_HEIGHT * 0.6;
+        var comment_box = new Sprite(box_x_size, box_y_size);
+        comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
+        comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+        comment_box.ontouchstart = function() {
+          if (isLastStage(stage_id, id)) {
+            //ここが最終ステージ
+            console.log("last stage now id: " + id)
+            game.replaceScene(renderingLastScene(stage_id, id, data));
+          } else {
+            console.log("comment_box " + next_id);
+            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+          }
         }
-      }
-      scene.addChild(comment_box);
-      var comment_label = new Label();
-      comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
-      comment_label.width = box_x_size * 0.8;
-      comment_label.height = box_y_size * 0.8;
-	  comment_label.color = '#000000';
-      comment_label.font = 'normal normal 70px/1.0 "Arial"';
-      comment_label.text = "正解";
-      scene.addChild(comment_label);
+        scene.addChild(comment_box);
+        var comment_label = new Label();
+        comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
+        comment_label.width = box_x_size * 0.8;
+        comment_label.height = box_y_size * 0.8;
+        comment_label.color = '#000000';
+        comment_label.font = 'normal normal 70px/1.0 "Arial"';
+        comment_label.text = "正解";
+        scene.addChild(comment_label);
+      } else {
+        //失敗
+        var next_id = getNextId(id, 2);
 
-    }else {
-      //失敗
-      var next_id = getNextId(id, 2);
+        // 問題ミスのフラグオン
+        strage.failed_ans = 1;
 
-      // 問題ミスのフラグオン
-      strage.failed_ans = 1;
-
-      //解説の表示
-      var comment = data['comment'].join(" ");
-      var box_x_size = SCREEN_WIDTH * 0.6;
-      var box_y_size = SCREEN_HEIGHT * 0.6;
-      var comment_box = new Sprite(box_x_size, box_y_size);
-      comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
-      comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
-      comment_box.ontouchstart = function() {
-        if (isLastStage(stage_id, id)) {
-          //ここが最終ステージ
-          console.log("last stage now id: " + id)
-          game.replaceScene(renderingLastScene(stage_id, id, data));
-        } else {
-          console.log("comment_box " + next_id);
-          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+        //解説の表示
+        var comment = data['comment'].join(" ");
+        var box_x_size = SCREEN_WIDTH * 0.6;
+        var box_y_size = SCREEN_HEIGHT * 0.6;
+        var comment_box = new Sprite(box_x_size, box_y_size);
+        comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
+        comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+        comment_box.ontouchstart = function() {
+          if (isLastStage(stage_id, id)) {
+            //ここが最終ステージ
+            console.log("last stage now id: " + id)
+            game.replaceScene(renderingLastScene(stage_id, id, data));
+          } else {
+            console.log("comment_box " + next_id);
+            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+          }
         }
-      }
-      scene.addChild(comment_box);
-      var comment_label = new Label();
-      comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
-      comment_label.width = box_x_size * 0.8;
-      comment_label.height = box_y_size * 0.8;
-	  comment_label.color = '#000000';
-      comment_label.font = 'normal normal 70px/1.0 "Arial"';
-      comment_label.text = comment;
-      scene.addChild(comment_label);
+        scene.addChild(comment_box);
+        var comment_label = new Label();
+        comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
+        comment_label.width = box_x_size * 0.8;
+        comment_label.height = box_y_size * 0.8;
+      comment_label.color = '#000000';
+        comment_label.font = 'normal normal 70px/1.0 "Arial"';
+        comment_label.text = comment;
+        scene.addChild(comment_label);
 
-      return scene;
-    }
+        return scene;
+      }
+    });
 
   }
 
@@ -530,9 +543,6 @@ enchant();
 
   }
 
-
-
-
   // 画像読み込み
 
   //
@@ -586,6 +596,7 @@ enchant();
     game.preload(STAGE_IMG_DIR + "/bg_13.jpg");
     game.preload('img/bord_02.png');
 
+    game.preload(TITLE_IMG_TEXT);
     game.preload(TITLE_IMG_BACKGROUND);
     game.preload(TITLE_IMG_CHARACTER);
     game.preload(TITLE_IMG_BUTTON);
@@ -598,6 +609,8 @@ enchant();
     game.preload(SELECT_IMG_TOUCH_2);
     game.preload(SELECT_IMG_TOUCH_3);
     game.preload(SELECT_IMG_TOUCH_4);
+
+    game.preload(STAGE_IMG_CUTIN);
 
     game.preload(KOBI_SOUND);
 
