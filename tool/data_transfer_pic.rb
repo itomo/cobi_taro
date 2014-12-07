@@ -5,10 +5,8 @@ src_dir  = "#{ROOT}/tool/resource"
 dist_dir = "#{ROOT}/data"
 
 SCENE    = "---scene-"
-QUESTION = "----question"
-SELECT   = "----select"
-ANSWER   = "----answer"
-COMMENT  = "----comment"
+BACKGROUND = "----bg"
+CHARACTER  = "----chara"
 
 SCENE_TYPE_NORMAL   = 0
 SCENE_TYPE_QUESTION = 1
@@ -31,44 +29,37 @@ end
 
 def separate_scene_info(scene_info)
   ret = {
-    "type"     => "",
-    "serif"    => [],
-    "question" => [],
-    "select"   => {},
-    "answer"   => "",
-    "comment"  => []
+    "background" => "",
+    "character"  => "",
   }
-  before_key = "serif"
+  before_key = ""
   scene_info.each_with_index do |line, i|
-    if line =~ /^#{QUESTION}/
-      before_key = "question"
-    elsif line =~ /^#{ANSWER}/
-      before_key = "answer"
-    elsif line =~ /^#{SELECT}/
-      before_key = "select"
-    elsif line =~ /^#{COMMENT}/
-      before_key = "comment"
+    if line =~ /^#{BACKGROUND}/
+      before_key = "background"
+    elsif line =~ /^#{CHARACTER}/
+      before_key = "character"
     else
-      case before_key
-      when "serif", "question", "comment"
-        ret[before_key] << line
-      when "select"
-        key, value = line.split(" ")
-        ret[before_key][key] = value
-      when "answer"
-        ret[before_key] = line
-      else
-        puts "error"
-      end
+      ret[before_key] = line
+      # case before_key
+      # when "background"
+      #   ret[before_key] = line
+      # when "select"
+      #   key, value = line.split(" ")
+      #   ret[before_key][key] = value
+      # when "answer"
+      #   ret[before_key] = line
+      # else
+      #   puts "error"
+      # end
     end
   end
 
-  type = SCENE_TYPE_NORMAL
-  unless ret["question"].empty?
-    type = SCENE_TYPE_QUESTION
-  end
-  ret["type"] = type
-#  p ret
+  # type = SCENE_TYPE_NORMAL
+  # unless ret["question"].empty?
+  #   type = SCENE_TYPE_QUESTION
+  # end
+  # ret["type"] = type
+  #p ret
   ret
 end
 
@@ -82,8 +73,10 @@ file_list.each do |file|
   next unless File.file?(file)
   src = File.open(file).read
 
+  # とりあえず stage1だけ
   tmp = file.split("/").last
-  if tmp =~ /_pic/
+#  unless tmp == "stage1_pic.txt"
+  unless tmp =~ /_pic/
     next;
   end
 
@@ -96,6 +89,7 @@ file_list.each do |file|
   end
 
   output_file = dist_dir + "/" + file.split("/").last.gsub(/\.txt/, '') + ".json"
+  puts output_file
   File.write(output_file, JSON.generate(ret))
 end
 
