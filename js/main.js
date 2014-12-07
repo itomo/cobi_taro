@@ -294,7 +294,7 @@ enchant();
         var str = 0;
         // セリフは0から
         var serif_count = 0;
-        if (serif[serif_count] != "" && serif_count < serif_num) {
+/*        if (serif[serif_count] != "" && serif_count < serif_num) {
             label_1.on('enterframe', function() {
                 if (serif_count < serif.length && str <= serif[serif_count].length) {
                     label_1.text = serif[serif_count].substring(0,str);
@@ -302,6 +302,7 @@ enchant();
                 }
             });
         }
+*/
 
         //見えないボタン
         var kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -310,10 +311,10 @@ enchant();
           if (serif_count < serif_num) {
             label_1.text = serif[serif_count];
             serif_count += 1;
-            if (serif_count < serif_num) {
+/*            if (serif_count < serif_num) {
               str = 0;
             }
-          } else {
+*/          } else {
             if (isLastStage(stage_id, id)) {
               //ここが最終ステージ
               console.log("last stage now id: " + id)
