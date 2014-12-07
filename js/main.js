@@ -415,11 +415,19 @@ enchant();
     console.log("checkAnswer num: " + num + "data['answer']: " + data['answer'])
     //  cut in
 
+    var correct_answer = game.assets[SE_SOUND_1];
+    var fail_answer = game.assets[SE_SOUND_2];
+    var cut_in_bgm = game.assets[SE_SOUND_3];
+
     var cut_in = new Sprite(2024, 748);
     cut_in.image = game.assets[STAGE_IMG_CUTIN];
     cut_in.moveTo(20, 150);
+    scene.addChild(cut_in);
+    cut_in_bgm.play();
+
     $.wait(500).done(function(){
       if (num == data['answer']) {
+        correct_answer.play();
         //正解
         var next_id = getNextId(id, 1);
 
@@ -449,6 +457,7 @@ enchant();
         comment_label.text = "正解";
         scene.addChild(comment_label);
       } else {
+        fail_answer.play();
         //失敗
         var next_id = getNextId(id, 2);
 
@@ -567,6 +576,28 @@ enchant();
     //   createSingleScene(i, data);
     // });
   }
+
+  //----- エンディングシーン -----
+  var createEndingScene = function() {
+    var scene = new Scene();
+    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    // 背景
+    background.backgroundColor= 'rgba(0,0,0,1)';
+    scene.addChild(background);
+
+    // 文字
+    var text = new Label('コビ太郎~ep.0~');
+    text.moveTo(800, 1000);
+    text.width = SCREEN_WIDTH * 0.9;
+    text.height = 500;
+    text.color = '#FFFFFF';
+    text.font = 'normal normal 70px/1.0 "Arial"';
+    scene.addChild(text);
+    text.tl.moveBy(0,-2000,100);
+
+    return scene;
+  }
+
   var createSingleScene = function(id, data) {
     var scene = new Scene();
     var label = new Label('コビ太郎~ep.0~');
@@ -613,9 +644,13 @@ enchant();
     game.preload(STAGE_IMG_CUTIN);
 
     game.preload(KOBI_SOUND);
+    game.preload(SE_SOUND_1);
+    game.preload(SE_SOUND_2);
+    game.preload(SE_SOUND_3);
 
     game.onload = function() {
       game.fps = 24;
+//      game.replaceScene(createEndingScene());
       game.replaceScene(createTitleScene());
     };
     game.start();
