@@ -1,9 +1,13 @@
 ---scene-1
 ----bg
+bg_14.jpg
+----chara
+chara_17-1.png
+
+---scene-2
 bg_01.jpg
 ----chara
 null
-
 
 ---scene-3
 ----bg

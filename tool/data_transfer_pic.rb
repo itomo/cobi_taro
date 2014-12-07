@@ -90,7 +90,7 @@ file_list.each do |file|
 
   output_file = dist_dir + "/" + file.split("/").last.gsub(/\.txt/, '') + ".json"
   puts output_file
-  File.write(output_file, JSON.generate(ret))
+#  File.write(output_file, JSON.generate(ret))
 end
 
 
