@@ -35,6 +35,22 @@ var chara_default_param = {
   'x'      : CHARACTER_PIC_X_POINT,
   'y'      : CHARACTER_PIC_Y_POINT
 }
+var commentbox_default_param = {
+  'width'  : 1664,
+  'height' : 1408,
+  'pic_url': "img/comment_01.png",
+  'x'      : (SCREEN_WIDTH - 1664)/2,
+  'y'      : (SCREEN_HEIGHT - 1408)/2
+}
+var commenttext_default_param = {
+  'width'  : 1664 * 0.65,
+  'height' : 1408 * 0.6,
+  'pic_url': "img/comment_01.png",
+  'x'      : (SCREEN_WIDTH - 1664)/2 + 200,
+  'y'      : (SCREEN_HEIGHT - 1408)/2 + 450
+}
+
+
 
 // ------- title scnen -------
 var title_background_param = {
