@@ -613,8 +613,20 @@ enchant();
     background.backgroundColor= 'rgba(0,0,0,1)';
     scene.addChild(background);
 
-    // 文字
-    var text = new Label('コビ太郎~ep.0~');
+    for (i=0; i < ending.length; i++) {
+      var text = new Label();
+      text.moveTo(50, 1300+(100*i));
+      text.width = SCREEN_WIDTH * 0.9;
+      text.height = 500;
+      text.color = '#FFFFFF';
+      text.font = 'normal normal 70px/1.0 "Arial"';
+      text.text = ending[i];
+      text.tl.moveBy(0,-8600,500);
+      scene.addChild(text);
+    }
+    console.log(ending);
+    var text = new Label();
+    /*
     text.moveTo(800, 1000);
     text.width = SCREEN_WIDTH * 0.9;
     text.height = 500;
@@ -622,6 +634,7 @@ enchant();
     text.font = 'normal normal 70px/1.0 "Arial"';
     scene.addChild(text);
     text.tl.moveBy(0,-2000,100);
+    */
 
     return scene;
   }
@@ -731,8 +744,8 @@ enchant();
 
     game.onload = function() {
       game.fps = 24;
-//      game.replaceScene(createEndingScene());
-      game.replaceScene(createTitleScene());
+      game.replaceScene(createEndingScene());
+//      game.replaceScene(createTitleScene());
     };
     game.start();
 
