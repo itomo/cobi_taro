@@ -558,7 +558,6 @@ enchant();
   // x, y           : 画像の座標
   //  var makeImg = function(pic_url, size_x, size_y, x, y) {
   var makeImg = function(param) {
-    console.log(param);
     var pic_url = param['pic_url'];
     var size_x  = param['width'];
     var size_y  = param['height'];
@@ -572,7 +571,10 @@ enchant();
 
   // 中央に人物を配置するパーツの作成
   var makeChara = function(param) {
-    console.log(param['pic_url']);
+    if (param['pic_url'] != "img/title/chara_01.png") {
+      param['height'] =640;
+      param['width'] =480;
+    }
     var img = makeImg(param);
     img.scaleX = CHARACTER_PIC_X_SCALE;
     img.scaleY = CHARACTER_PIC_Y_SCALE;
