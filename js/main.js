@@ -399,7 +399,12 @@ enchant();
         // 会話を表示させきったので選択画面へ
         console.log()
         if (strage.failed_ans == 0) {
+          // 全問正解なのでエンディングへ
           strage.open_stage = strage.open_stage + 1;
+          if (stage_id == 4) {
+            console.log("gotto Ending")
+            game.replaceScene(createEndingScene());
+          }
         }
         game.replaceScene(SelectScene());
 
@@ -609,6 +614,7 @@ enchant();
 
   //----- エンディングシーン -----
   var createEndingScene = function() {
+    console.log("createEndingScene");
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     // 背景
@@ -627,6 +633,18 @@ enchant();
       scene.addChild(text);
     }
 
+    // var kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+    // kick_button.moveTo(0, 0);
+    // kick_button.ontouchstart = function() {
+    //   console.log("ending touch");
+    //   $.wait(1000).done(function(){
+    //     game.replaceScene(SelectScene());
+    //   });
+    // }
+    //scene.addChild(kick_button);
+    $.wait(46000).done(function(){
+      game.replaceScene(SelectScene());
+   });
     return scene;
   }
 
