@@ -411,6 +411,8 @@ enchant();
           if (stage_id == 4) {
             console.log("gotto Ending")
             game.replaceScene(createEndingScene());
+          } else {
+            game.replaceScene(SelectScene());
           }
         } else {
           game.replaceScene(SelectScene());
