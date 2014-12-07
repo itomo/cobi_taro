@@ -174,7 +174,7 @@ enchant();
     strage.failed_ans = 0;
     //assets.loadAsset(id, renderingStart);
     assets.loadAsset(id, function(stage_id, scene_id, data){
-      game.replaceScene(renderingLabel(stage_id, scene_id, data), "ho");
+      game.replaceScene(renderingLabel(stage_id, scene_id, data));
     });
   };
 
@@ -317,12 +317,15 @@ enchant();
             if (isLastStage(stage_id, id)) {
               //ここが最終ステージ
               console.log("last stage now id: " + id)
+              //game.replaceScene(renderingLastScene(stage_id, id, data));
+              game.removeScene(scene);
               game.replaceScene(renderingLastScene(stage_id, id, data));
             } else {
               //次もある
               next_id = getNextId(id, 0);
               console.log("next_id: " + next_id)
-              game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+              game.removeScene(scene);
+              game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]));
             }
 
           }
@@ -433,16 +436,17 @@ enchant();
 
     $.wait(500).done(function(){
       if (num == data['answer']) {
+        //-----------------------------------------------
+        //  せいかい
+        //-----------------------------------------------
         correct_answer.play();
         //正解
         var next_id = getNextId(id, 1);
 
-        //きっと正解シーンがでる
-        var box_x_size = SCREEN_WIDTH * 0.6;
-        var box_y_size = SCREEN_HEIGHT * 0.6;
-        var comment_box = new Sprite(box_x_size, box_y_size);
-        comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
-        comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+        //解説の表示
+        var comment = data['comment'].join(" ");
+        // 箱
+        var comment_box = makeCommentBox();
         comment_box.ontouchstart = function() {
           if (isLastStage(stage_id, id)) {
             //ここが最終ステージ
@@ -450,19 +454,19 @@ enchant();
             game.replaceScene(renderingLastScene(stage_id, id, data));
           } else {
             console.log("comment_box " + next_id);
-            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]));
           }
         }
         scene.addChild(comment_box);
-        var comment_label = new Label();
-        comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
-        comment_label.width = box_x_size * 0.8;
-        comment_label.height = box_y_size * 0.8;
-        comment_label.color = '#000000';
-        comment_label.font = 'normal normal 70px/1.0 "Arial"';
-        comment_label.text = "正解";
+        // 解説
+        var comment_label = makeCommentText(comment)
         scene.addChild(comment_label);
+
       } else {
+        //-----------------------------------------------
+        //  ごとう
+        //-----------------------------------------------
+
         fail_answer.play();
         //失敗
         var next_id = getNextId(id, 2);
@@ -472,29 +476,19 @@ enchant();
 
         //解説の表示
         var comment = data['comment'].join(" ");
-        var box_x_size = SCREEN_WIDTH * 0.6;
-        var box_y_size = SCREEN_HEIGHT * 0.6;
-        var comment_box = new Sprite(box_x_size, box_y_size);
-        comment_box.moveTo(SCREEN_WIDTH/2 - box_x_size/2, SCREEN_HEIGHT/2 - box_y_size/2);
-        comment_box.backgroundColor = "rgba(255, 228, 225, 1)";
+        // 箱
+        var comment_box = makeCommentBox();
         comment_box.ontouchstart = function() {
           if (isLastStage(stage_id, id)) {
             //ここが最終ステージ
-            console.log("last stage now id: " + id)
             game.replaceScene(renderingLastScene(stage_id, id, data));
           } else {
-            console.log("comment_box " + next_id);
-            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
+            game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]));
           }
         }
         scene.addChild(comment_box);
-        var comment_label = new Label();
-        comment_label.moveTo(SCREEN_WIDTH/2 - box_x_size/2 + 20, SCREEN_HEIGHT/2 - box_y_size/2 + 20);
-        comment_label.width = box_x_size * 0.8;
-        comment_label.height = box_y_size * 0.8;
-      comment_label.color = '#000000';
-        comment_label.font = 'normal normal 70px/1.0 "Arial"';
-        comment_label.text = comment;
+        // 解説
+        var comment_label = makeCommentText(comment)
         scene.addChild(comment_label);
 
         return scene;
@@ -586,30 +580,24 @@ enchant();
     return img
   }
 
+  var makeCommentBox = function() {
+    var comment_param = commentbox_default_param;
+    var comment_box = makeImg(comment_param);
+    comment_box.scaleX = 0.8;
+    comment_box.scaleY = 0.8;
+    return comment_box;
+  }
 
-  // 画像読み込み
-
-  //
-  var createScene = function(id, data_list) {
-//    createSingleScene(1, data_list[1])
-
-    console.log("createSingleScene " + id);
-    console.log(data_list[1]);
-
-    var scene = new Scene(SCREEN_WIDTH, SCREEN_HEIGHT);
-    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
-    background.x = 0;
-    background.y = 0;
-
-    scene.addChild(background);
-
-    return scene;
-
-
-    // $.each(data_list, function(i, data){
-    //   createSingleScene(i, data);
-    // });
+  var makeCommentText = function(text) {
+    var comment_param = commenttext_default_param
+    var comment_label = new Label();
+    comment_label.moveTo(comment_param['x'], comment_param['y']);
+    comment_label.width = comment_param['width'];
+    comment_label.height = comment_param['height'];
+    comment_label.color = '#000000';
+    comment_label.font = 'normal normal 70px/1.0 "Arial"';
+    comment_label.text = text;
+    return comment_label;
   }
 
   //----- エンディングシーン -----
@@ -648,28 +636,6 @@ enchant();
 
     return scene;
   }
-
-  var createSingleScene = function(id, data) {
-    var scene = new Scene();
-    var label = new Label('コビ太郎~ep.0~');
-    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-    // 背景
-    background.image = game.assets[TITLE_IMG_BACKGROUND];
-    scene.addChild(background);
-
-    // console.log("createSingleScene " + id)
-    // console.log(data)
-
-    // var scene = new Scene(SCREEN_WIDTH, SCREEN_HEIGHT);
-    // var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    // background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
-    // scene.addChild(background);
-
-    return scene;
-    // var serif_label = new Label();
-  }
-
 
   window.onload = function() {
     game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -744,6 +710,7 @@ enchant();
     game.preload("img/chara/chara_14-1.png");
     game.preload("img/chara/chara_15-2.png");
     game.preload("img/chara/chara_16-3.png");
+    game.preload("img/comment_01.png");
 
     game.preload(STAGE_IMG_CUTIN);
 
