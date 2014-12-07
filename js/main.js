@@ -7,36 +7,24 @@ enchant();
   var createTitleScene = function() {
     var scene = new Scene();
     var label = new Label('コビ太郎~ep.0~');
-    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+
     // 背景
-    background.image = game.assets[TITLE_IMG_BACKGROUND];
+    var background = makeImg(title_background_param)
     scene.addChild(background);
-
     // 人物
-    var chara = new Sprite(520, 748);
-    chara.image = game.assets[TITLE_IMG_CHARACTER];
-    chara.moveTo(800, 250);
-    chara.scaleX = 1.3;
-    chara.scaleY = 1.3;
+    var chara = makeChara(title_chara);
     scene.addChild(chara);
-
     // ボタン
-    var button1 = new Sprite(764, 384);
-    button1.image = game.assets[TITLE_IMG_BUTTON];
-    button1.moveTo(250, 1088);
+    var button1 = makeImg(title_button1_param);
     button1.ontouchstart = function() {
       game.replaceScene(SelectScene());
     };
     scene.addChild(button1);
-
-    var button2 = new Sprite(764, 384);
-    button2.image = game.assets[TITLE_IMG_BUTTON];
-    button2.moveTo(1164, 1088);
+    var button2 = makeImg(title_button2_param);
     button2.ontouchstart = function() {
       // テスト用に全解放
       strage.open_stage = 4;
-        game.replaceScene(SelectScene());
-//      game.replaceScene(GameScene());
+      game.replaceScene(SelectScene());
     };
     scene.addChild(button2);
 
@@ -184,16 +172,28 @@ enchant();
 
   var renderingLabel = function(stage_id, id, data, pic) {
     var scene = new Scene();
-    var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    background.image = game.assets[STAGE_IMG_DIR + "/bg_13.jpg"];
-    background.x = 0;
-    background.y = 0;
+
+    // 背景データが入ってたら、背景切り替え
+    var bg_param = background_default_param;
+    // default
+    if (assets.stage_pic[stage_id][id] != undefined) {
+      bg_param['pic_url'] = "img/stage/" + assets.stage_pic[stage_id][id]['background'];
+    }
+    var background = makeImg(bg_param);
     scene.addChild(background);
 
-    var scenario = new Sprite(1986, 512);
-    scenario.image = game.assets['img/bord_02.png'];
-    scenario.moveTo(32, 960);
+    var scenario_board_param = scenario_board_default_param;
+    var scenario = makeImg(scenario_board_param);
     scene.addChild(scenario);
+
+    var chara_param = chara_default_param;
+    if (assets.stage_pic[stage_id][id] != undefined) {
+      chara_param['pic_url'] = "img/chara/" + assets.stage_pic[stage_id][id]['character'];
+    }
+    if (chara_param['pic_url'] != "img/chara/null") {
+      var chara = makeChara(chara_param);
+      scene.addChild(chara);
+    }
 
     var serif = data["serif"];
     var serif_num = serif.length;
@@ -526,11 +526,34 @@ enchant();
     } else {
       return false;
     }
-
-
   }
 
+  // 画像Spriteの基本的な部分を生成
+  // pic_url        : 画像のパス
+  // size_x, size_y : 画像の横/縦の大きさ
+  // x, y           : 画像の座標
+//  var makeImg = function(pic_url, size_x, size_y, x, y) {
+  var makeImg = function(param) {
+    console.log(param);
+    var pic_url = param['pic_url'];
+    var size_x  = param['width'];
+    var size_y  = param['height'];
+    var x       = param['x'];
+    var y       = param['y'];
+    var img = new Sprite(size_x, size_y);
+    img.image = game.assets[pic_url];
+    img.moveTo(x, y);
+    return img;
+  };
 
+  // 中央に人物を配置するパーツの作成
+  var makeChara = function(param) {
+    console.log(param['pic_url']);
+    var img = makeImg(param);
+    img.scaleX = CHARACTER_PIC_X_SCALE;
+    img.scaleY = CHARACTER_PIC_Y_SCALE;
+    return img
+  }
 
 
   // 画像読み込み
@@ -598,6 +621,59 @@ enchant();
     game.preload(SELECT_IMG_TOUCH_2);
     game.preload(SELECT_IMG_TOUCH_3);
     game.preload(SELECT_IMG_TOUCH_4);
+    game.preload("img/stage/bg_01.jpg");
+    game.preload("img/stage/bg_02.jpg");
+    game.preload("img/stage/bg_03.jpg");
+    game.preload("img/stage/bg_04.jpg");
+    game.preload("img/stage/bg_05.jpg");
+    game.preload("img/stage/bg_06.jpg");
+    game.preload("img/stage/bg_07.jpg");
+    game.preload("img/stage/bg_08.jpg");
+    game.preload("img/stage/bg_09.jpg");
+    game.preload("img/stage/bg_10.jpg");
+    game.preload("img/stage/bg_11.jpg");
+    game.preload("img/stage/bg_12.jpg");
+    game.preload("img/stage/bg_13.jpg");
+    game.preload("img/chara/chara_01-1.png");
+    game.preload("img/chara/chara_02-2.png");
+    game.preload("img/chara/chara_03-3.png");
+    game.preload("img/chara/chara_07-1.png");
+    game.preload("img/chara/chara_08-2.png");
+    game.preload("img/chara/chara_09-3.png");
+    game.preload("img/chara/chara_11-3.png");
+    game.preload("img/chara/chara_13-1.png");
+    game.preload("img/chara/chara_14-2.png");
+    game.preload("img/chara/chara_15-3.png");
+    game.preload("img/chara/chara_01-2.png");
+    game.preload("img/chara/chara_02-3.png");
+    game.preload("img/chara/chara_04-1.png");
+    game.preload("img/chara/chara_07-2.png");
+    game.preload("img/chara/chara_08-3.png");
+    game.preload("img/chara/chara_10-1.png");
+    game.preload("img/chara/chara_12-1.png");
+    game.preload("img/chara/chara_13-2.png");
+    game.preload("img/chara/chara_14-3.png");
+    game.preload("img/chara/chara_16-1.png");
+    game.preload("img/chara/chara_01-3.png");
+    game.preload("img/chara/chara_03-1.png");
+    game.preload("img/chara/chara_05-1.png");
+    game.preload("img/chara/chara_07-3.png");
+    game.preload("img/chara/chara_09-1.png");
+    game.preload("img/chara/chara_11-1.png");
+    game.preload("img/chara/chara_12-2.png");
+    game.preload("img/chara/chara_13-3.png");
+    game.preload("img/chara/chara_15-1.png");
+    game.preload("img/chara/chara_16-2.png");
+    game.preload("img/chara/chara_02-1.png");
+    game.preload("img/chara/chara_03-2.png");
+    game.preload("img/chara/chara_06-1.png");
+    game.preload("img/chara/chara_08-1.png");
+    game.preload("img/chara/chara_09-2.png");
+    game.preload("img/chara/chara_11-2.png");
+    game.preload("img/chara/chara_12-3.png");
+    game.preload("img/chara/chara_14-1.png");
+    game.preload("img/chara/chara_15-2.png");
+    game.preload("img/chara/chara_16-3.png");
 
     game.preload(KOBI_SOUND);
 
