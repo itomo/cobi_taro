@@ -4,7 +4,7 @@ window.assets = (function(){
   var assets = new Module();
 
   // stage番号と合わせる
-  assets.laststage = [0, 13, 14, 15, 16];
+  assets.laststage = [0, 13, 12, 12, 12];
 
   assets.stage = {};
 

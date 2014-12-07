@@ -33,6 +33,8 @@ enchant();
     button2.image = game.assets[TITLE_IMG_BUTTON];
     button2.moveTo(1164, 1088);
     button2.ontouchstart = function() {
+      // テスト用に全解放
+      strage.open_stage = 4;
         game.replaceScene(SelectScene());
 //      game.replaceScene(GameScene());
     };
