@@ -629,22 +629,23 @@ enchant();
       text.color = '#FFFFFF';
       text.font = 'normal normal 70px/1.0 "Arial"';
       text.text = ending[i];
-      text.tl.moveBy(0,-8600,500);
+      if (i == ending.length-1) {
+        text.tl.moveBy(0,-8600,500).then(function() {
+          var bk_button = new Label('戻る');
+          bk_button.moveTo(900, 1200);
+          bk_button.color = '#FFFFFF';
+          bk_button.font = 'normal normal 50px/1.0 "Arial"';
+          scene.addChild(bk_button);
+          bk_button.ontouchstart = function() {
+            game.replaceScene(createTitleScene());
+          }
+        });
+      } else {
+        text.tl.moveBy(0,-8600,500);
+      }
       scene.addChild(text);
     }
 
-    // var kick_button= new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-    // kick_button.moveTo(0, 0);
-    // kick_button.ontouchstart = function() {
-    //   console.log("ending touch");
-    //   $.wait(1000).done(function(){
-    //     game.replaceScene(SelectScene());
-    //   });
-    // }
-    //scene.addChild(kick_button);
-    $.wait(46000).done(function(){
-      game.replaceScene(SelectScene());
-   });
     return scene;
   }
 
