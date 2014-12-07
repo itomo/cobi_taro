@@ -185,10 +185,14 @@ enchant();
     var bg_param = background_default_param;
     // default
     if (assets.stage_pic[stage_id][id] != undefined) {
+      if (assets.stage_pic[stage_id][id]['background'] != '') {
       bg_param['pic_url'] = "img/stage/" + assets.stage_pic[stage_id][id]['background'];
+      }
     }
+
     var background = makeImg(bg_param);
     scene.addChild(background);
+
 
     var scenario_board_param = scenario_board_default_param;
     var scenario = makeImg(scenario_board_param);
@@ -557,6 +561,7 @@ enchant();
   // x, y           : 画像の座標
   //  var makeImg = function(pic_url, size_x, size_y, x, y) {
   var makeImg = function(param) {
+    console.log(param)
     var pic_url = param['pic_url'];
     var size_x  = param['width'];
     var size_y  = param['height'];
@@ -670,6 +675,7 @@ enchant();
     game.preload("img/stage/bg_11.jpg");
     game.preload("img/stage/bg_12.jpg");
     game.preload("img/stage/bg_13.jpg");
+    game.preload("img/stage/bg_14.jpg");
     game.preload("img/chara/chara_01-1.png");
     game.preload("img/chara/chara_02-2.png");
     game.preload("img/chara/chara_03-3.png");
@@ -710,6 +716,7 @@ enchant();
     game.preload("img/chara/chara_14-1.png");
     game.preload("img/chara/chara_15-2.png");
     game.preload("img/chara/chara_16-3.png");
+    game.preload("img/chara/chara_17-1.png");
     game.preload("img/comment_01.png");
 
     game.preload(STAGE_IMG_CUTIN);
