@@ -68,6 +68,7 @@ def separate_scene_info(scene_info)
     type = SCENE_TYPE_QUESTION
   end
   ret["type"] = type
+#  p ret
   ret
 end
 
@@ -80,6 +81,13 @@ file_list = Dir.glob("#{src_dir}/*")
 file_list.each do |file|
   next unless File.file?(file)
   src = File.open(file).read
+
+  # tmp = file.split("/").last
+  # unless tmp == "stage4.txt"
+  #   next;
+  # end
+
+  puts file
 
   ret = {}
   scene_list = split_scene(src)
