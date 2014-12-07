@@ -412,9 +412,9 @@ enchant();
             console.log("gotto Ending")
             game.replaceScene(createEndingScene());
           }
+        } else {
+          game.replaceScene(SelectScene());
         }
-        game.replaceScene(SelectScene());
-
       }
     };
     scene.addChild(kick_button);
