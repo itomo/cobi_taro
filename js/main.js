@@ -733,8 +733,8 @@ enchant();
 
     game.onload = function() {
       game.fps = 24;
-      game.replaceScene(createEndingScene());
-//      game.replaceScene(createTitleScene());
+//      game.replaceScene(createEndingScene());
+      game.replaceScene(createTitleScene());
     };
     game.start();
 
