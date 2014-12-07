@@ -2,7 +2,6 @@ $(function(){
 
 enchant();
 
-
   var open_stage = 1;
   //----- タイトルシーン -----
   var createTitleScene = function() {
@@ -173,16 +172,13 @@ enchant();
 
   //----- ステージシーンのセットアップ
   var setupScene = function(id) {
-
     // 問題ミスのフラグを初期化
     strage.failed_ans = 0;
-    game.replaceScene(renderingLabel(1, 1, assets.stage_1[1]), "ho")
-
+    //assets.loadAsset(id, renderingStart);
+    assets.loadAsset(id, function(stage_id, scene_id, data){
+      game.replaceScene(renderingLabel(stage_id, scene_id, data), "ho");
+    });
   };
-
-  var changeStoryScene = function() {
-  }
-
 
   var renderingLabel = function(stage_id, id, data, pic) {
     var scene = new Scene();
@@ -316,7 +312,7 @@ enchant();
               //次もある
               next_id = getNextId(id, 0);
               console.log("next_id: " + next_id)
-              game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+              game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
             }
 
           }
@@ -341,7 +337,7 @@ enchant();
     }
 
     console.log("renderingLastScene next_id: " + next_id + " id: " + id);
-    var last_data = assets.stage_1[next_id];
+    var last_data = assets.stage[stage_id][next_id];
 
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -425,7 +421,7 @@ enchant();
           game.replaceScene(renderingLastScene(stage_id, id, data));
         } else {
           console.log("comment_box " + next_id);
-          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
         }
       }
       scene.addChild(comment_box);
@@ -459,7 +455,7 @@ enchant();
           game.replaceScene(renderingLastScene(stage_id, id, data));
         } else {
           console.log("comment_box " + next_id);
-          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage_1[next_id]), "ho");
+          game.replaceScene(renderingLabel(stage_id, next_id, assets.stage[stage_id][next_id]), "ho");
         }
       }
       scene.addChild(comment_box);
