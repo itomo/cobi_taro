@@ -624,17 +624,6 @@ enchant();
       text.tl.moveBy(0,-8600,500);
       scene.addChild(text);
     }
-    console.log(ending);
-    var text = new Label();
-    /*
-    text.moveTo(800, 1000);
-    text.width = SCREEN_WIDTH * 0.9;
-    text.height = 500;
-    text.color = '#FFFFFF';
-    text.font = 'normal normal 70px/1.0 "Arial"';
-    scene.addChild(text);
-    text.tl.moveBy(0,-2000,100);
-    */
 
     return scene;
   }
