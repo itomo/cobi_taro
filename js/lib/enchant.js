@@ -1656,7 +1656,7 @@ enchant.EventTarget = enchant.Class.create({
          * @return {enchant.Scene} The new Scene.
          */
         replaceScene: function(scene) {
-            this.popScene();
+            this.popScene().remove();
             return this.pushScene(scene);
         },
         /**
