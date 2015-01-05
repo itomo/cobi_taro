@@ -82,6 +82,93 @@ var title_button2_param = {
   'y'      : 1088
 }
 
+// --- select scene ----
+var backbutton_param = {
+  'width'  : 128,
+  'height' : 128,
+  'pic_url': "img/select/button_02.png",
+  'x'      : 1888,
+  'y'      : 32
+}
+var select_stage_button_param = {};
+select_stage_button_param[1] = {
+  'width'  : Math.floor(SCREEN_WIDTH/ LAST_STAGE),
+  'height' : SCREEN_HEIGHT,
+  'pic_url': "",
+  'x'      : 0,
+  'y'      : 0,
+  'animation' : {
+    'width'   : SCREEN_WIDTH,
+    'height'  : SCREEN_HEIGHT,
+    'pic_url' : "img/select/SelectScene_06.png",
+    'x'       : 0,
+    'y'       : 0,
+    'move_x'  : 400,
+    'move_y'  : 0,
+    'move_s'  : 5,
+    'scale_x' : 1.5,
+    'scale_y' : 5
+  }
+};
+select_stage_button_param[2] = {
+  'width'  : Math.floor(SCREEN_WIDTH/ LAST_STAGE),
+  'height' : SCREEN_HEIGHT,
+  'pic_url': "",
+  'x'      : Math.floor(SCREEN_WIDTH/ LAST_STAGE),
+  'y'      : 0,
+  'animation' : {
+    'width'   : SCREEN_WIDTH,
+    'height'  : SCREEN_HEIGHT,
+    'pic_url' : "img/select/SelectScene_07.png",
+    'x'       : 0,
+    'y'       : 0,
+    'move_x'  : 300,
+    'move_y'  : 0,
+    'move_s'  : 5,
+    'scale_x' : 1.5,
+    'scale_y' : 5
+  }
+};
+select_stage_button_param[3] = {
+  'width'  : Math.floor(SCREEN_WIDTH/ LAST_STAGE),
+  'height' : SCREEN_HEIGHT,
+  'pic_url': "",
+  'x'      : Math.floor(SCREEN_WIDTH/ LAST_STAGE) * 2,
+  'y'      : 0,
+  'animation' : {
+    'width'   : SCREEN_WIDTH,
+    'height'  : SCREEN_HEIGHT,
+    'pic_url' : "img/select/SelectScene_08.png",
+    'x'       : 0,
+    'y'       : 0,
+    'move_x'  : -200,
+    'move_y'  : 0,
+    'move_s'  : 5,
+    'scale_x' : 1.5,
+    'scale_y' : 5
+  }
+};
+select_stage_button_param[4] = {
+  'width'  : Math.floor(SCREEN_WIDTH/ LAST_STAGE),
+  'height' : SCREEN_HEIGHT,
+  'pic_url': "",
+  'x'      : Math.floor(SCREEN_WIDTH/ LAST_STAGE) * 3,
+  'y'      : 0,
+  'animation' : {
+    'width'   : SCREEN_WIDTH,
+    'height'  : SCREEN_HEIGHT,
+    'pic_url' : "img/select/SelectScene_09.png",
+    'x'       : 0,
+    'y'       : 0,
+    'move_x'  : -600,
+    'move_y'  : 0,
+    'move_s'  : 5,
+    'scale_x' : 1.5,
+    'scale_y' : 5
+  }
+};
+
+
 $.wait = function(msec) {
     var d = new $.Deferred;
     setTimeout(function(){
@@ -91,6 +178,7 @@ $.wait = function(msec) {
     return d.promise();
 };
 
+// 型の判定
 function is(type, obj) {
     var clas = Object.prototype.toString.call(obj).slice(8, -1);
     return obj !== undefined && obj !== null && clas === type;

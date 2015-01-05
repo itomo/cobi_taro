@@ -2,6 +2,11 @@ $(function(){
 
 enchant();
 
+  // 1. タイトルシーン
+  // 2. ステージ選択シーン
+  // 3. ノベルシーン
+  // 4. エンディングシーン
+
   var open_stage = 1;
   //----- タイトルシーン -----
   var createTitleScene = function() {
@@ -9,7 +14,7 @@ enchant();
     var label = new Label('コビ太郎~ep.0~');
 
     // 背景
-    var background = makeImg(title_background_param)
+    var background = makeImg(title_background_param);
     scene.addChild(background);
 
     // 人物
@@ -50,7 +55,6 @@ enchant();
     scene.addChild(label);
 
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-
     switch (strage.open_stage) {
     case 1:
       img_path = SELECT_IMG_BACKGROUND_1;
@@ -70,98 +74,24 @@ enchant();
     background.image = game.assets[img_path];
     scene.addChild(background)
 
-    var backbutton = new Sprite(128, 128);
-    backbutton.image = game.assets[SELECT_IMG_BUTTON];
-    backbutton.moveTo(1888, 32);
+    var backbutton = makeImg(backbutton_param);
     scene.addChild(backbutton);
 
+    // ステージ選択用の(透明)ボタンを配置
     var button_width = Math.floor(SCREEN_WIDTH/ LAST_STAGE);    //  各ボタンの幅
-    select_button_1 = new Sprite(button_width, SCREEN_HEIGHT);
-    select_button_1.moveTo(0, 0);
-    select_button_1.ontouchstart = function() {
-      scene.removeChild(this);
-      select_bgm.play();
-      $.wait(500).done(function(){
-        select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-        select_scene.image = game.assets[SELECT_IMG_TOUCH_1];
-        select_scene.moveTo(0, 0);
-        scene.addChild(select_scene);
-        select_scene.tl.moveBy(400,0,5);
-        select_scene.tl.and();
-        select_scene.tl.scaleBy(1.5,5);
-        $.wait(500).done(function(){
-          setupScene(1);
-        });
-      });
-    };
+    var select_button_1 = makeSelectButton(1, scene);
     scene.addChild(select_button_1);
 
     if (strage.open_stage > 1) {
-      select_button_2 = new Sprite(button_width, SCREEN_HEIGHT);
-      start_width_2 = button_width;
-      select_button_2.moveTo(start_width_2, 0);
-      select_button_2.ontouchstart = function() {
-        scene.removeChild(this);
-        select_bgm.play();
-        $.wait(500).done(function(){
-          select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-          select_scene.image = game.assets[SELECT_IMG_TOUCH_2];
-          select_scene.moveTo(0, 0);
-          scene.addChild(select_scene);
-          select_scene.tl.moveBy(300,0,5);
-          select_scene.tl.and();
-          select_scene.tl.scaleBy(1.5,5);
-            $.wait(500).done(function(){
-              setupScene(2);
-            });
-        });
-      };
+      var select_button_2 = makeSelectButton(2, scene);
       scene.addChild(select_button_2);
     }
-
     if (strage.open_stage > 2) {
-      select_button_3 = new Sprite(button_width, SCREEN_HEIGHT);
-      start_width_3 = button_width*2;
-      select_button_3.moveTo(start_width_3, 0);
-      select_button_3.ontouchstart = function() {
-        scene.removeChild(this);
-        select_bgm.play();
-        $.wait(500).done(function(){
-          select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-          select_scene.image = game.assets[SELECT_IMG_TOUCH_3];
-          select_scene.moveTo(0, 0);
-          scene.addChild(select_scene);
-          select_scene.tl.moveBy(-200,0,5);
-          select_scene.tl.and();
-          select_scene.tl.scaleBy(1.5,5);
-            $.wait(500).done(function(){
-              setupScene(3);
-            });
-        });
-      };
+      var select_button_3 = makeSelectButton(3, scene);
       scene.addChild(select_button_3);
     }
-
     if (strage.open_stage > 3) {
-      select_button_4 = new Sprite(button_width, SCREEN_HEIGHT);
-      start_width_4 = button_width*3;
-      select_button_4.moveTo(start_width_4, 0);
-      select_button_4.ontouchstart = function() {
-        scene.removeChild(this);
-        select_bgm.play();
-        $.wait(500).done(function(){
-            select_scene = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-            select_scene.image = game.assets[SELECT_IMG_TOUCH_4];
-            select_scene.moveTo(0, 0);
-            scene.addChild(select_scene);
-            select_scene.tl.moveBy(-600,0,5);
-            select_scene.tl.and();
-            select_scene.tl.scaleBy(1.5,5);
-            $.wait(500).done(function(){
-              setupScene(4);
-            });
-        });
-      };
+      var select_button_4 = makeSelectButton(4, scene);
       scene.addChild(select_button_4);
     }
 
@@ -178,6 +108,38 @@ enchant();
     });
   };
 
+  // --- ノベルシーン
+  // data: ステージのデータ
+  var createNovelScene = function(stage_id, data) {
+    var scene = new Scene();
+
+    var background      = new Sprite(); // 背景
+    var text_background = new Sprite(); // テキストエリアの背景
+    var character       = new Sprite(); // 登場人物
+    var text            = new Label();  // 問題分とか
+
+    // Sceneはそのままで内容を変えて回る
+    while(1) { // 最終問題までループ
+      if (assets.stage_pic[stage_id][id]['type'] == 1) {
+        renderingQuestionScene(stage_id, id, background, text_background, character, text);
+      } else {
+        renderingNormalScene(stage_id, id, background, text_background, character, text);
+      }
+    }
+    // 最終問題を描画
+    renderingLastScene();
+    return scene
+  };
+
+  // 通常のシーンを描画(内容の変更)
+  var renderingNormalScene = function(stage_id, id, background, text_background, character, text) {
+  };
+
+  // 問題のシーンを描画(answer boxを出す)
+  var renderingQuestionScene = function(stage_id, id, background, text_background, character, text) {
+  };
+
+
   var renderingLabel = function(stage_id, id, data, pic) {
     var scene = new Scene();
 
@@ -190,14 +152,16 @@ enchant();
       }
     }
 
+    // 背景
     var background = makeImg(bg_param);
     scene.addChild(background);
 
-
+    // セリフ
     var scenario_board_param = scenario_board_default_param;
     var scenario = makeImg(scenario_board_param);
     scene.addChild(scenario);
 
+    // 登場人物
     var chara_param = chara_default_param;
     if (assets.stage_pic[stage_id][id] != undefined) {
       chara_param['pic_url'] = "img/chara/" + assets.stage_pic[stage_id][id]['character'];
@@ -537,7 +501,7 @@ enchant();
     return next_id;
   }
 
-  // 最終ステージ化確認する
+  // 最終ステージか確認する
   var isLastStage = function(stage_id, now) {
     var now_id = now;
     var now_id_num;
@@ -556,21 +520,22 @@ enchant();
     }
   }
 
-
   // 画像Spriteの基本的な部分を生成
   // pic_url        : 画像のパス
   // size_x, size_y : 画像の横/縦の大きさ
   // x, y           : 画像の座標
   //  var makeImg = function(pic_url, size_x, size_y, x, y) {
   var makeImg = function(param) {
-    console.log(param)
     var pic_url = param['pic_url'];
     var size_x  = param['width'];
     var size_y  = param['height'];
     var x       = param['x'];
     var y       = param['y'];
     var img = new Sprite(size_x, size_y);
-    img.image = game.assets[pic_url];
+    // pic_urlが空文字でないなら、imageを配置する
+    if (pic_url != "") {
+      img.image = game.assets[pic_url];
+    }
     img.moveTo(x, y);
     return img;
   };
@@ -587,6 +552,7 @@ enchant();
     return img
   }
 
+  // 解説用のboxの作成
   var makeCommentBox = function() {
     var comment_param = commentbox_default_param;
     var comment_box = makeImg(comment_param);
@@ -595,6 +561,7 @@ enchant();
     return comment_box;
   }
 
+  // 解説用のテキストの作成
   var makeCommentText = function(text) {
     var comment_param = commenttext_default_param
     var comment_label = new Label();
@@ -606,6 +573,34 @@ enchant();
     comment_label.text = text;
     return comment_label;
   }
+
+  var makeSelectButton = function(stage_id, scene) {
+    var select_bgm = game.assets[KOBI_SOUND];
+    var kick_button = makeImg(select_stage_button_param[stage_id]);
+    var animation_info = select_stage_button_param[stage_id]['animation']
+    kick_button.ontouchstart = function() {
+      scene.removeChild(this);
+      select_bgm.play();
+      $.wait(500).done(function(){
+        var select_scene = makeImg(animation_info);
+        scene.addChild(select_scene);
+        select_scene.tl.moveBy(
+          animation_info['move_x'],
+          animation_info['move_y'],
+          animation_info['move_s']
+        );
+        select_scene.tl.and();
+        select_scene.tl.scaleBy(
+          animation_info['scale_x'],
+          animation_info['scale_y']
+        );
+        $.wait(500).done(function(){
+          setupScene(stage_id);
+        });
+      });
+    };
+    return kick_button;
+  };
 
   //----- エンディングシーン -----
   var createEndingScene = function() {
@@ -729,7 +724,7 @@ enchant();
     game.preload(SE_SOUND_3);
 
     game.onload = function() {
-      game.fps = 24;
+      game.fps = 12;
 //      game.replaceScene(createEndingScene());
       game.replaceScene(createTitleScene());
     };
