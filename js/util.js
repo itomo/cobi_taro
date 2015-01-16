@@ -221,4 +221,3 @@ var isLastStage = function(stage_id, now) {
     return false;
   }
 };
-
