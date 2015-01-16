@@ -78,6 +78,13 @@ window.param = {
     'y'      : (SCREEN_HEIGHT - 1408)/2 + 450,
     'color'  : '#000000',
     'font'   : 'normal normal 70px/1.0 "Arial"'
+  },
+  default_cut_in: {
+    'width'  : 2024,
+    'height' : 768,
+    'pic_url': "img/stage/cutin.png",
+    'x'      : SCREEN_WIDTH,
+    'y'      : SCREEN_HEIGHT * 0.1
   }
 
 };
