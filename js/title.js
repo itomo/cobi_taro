@@ -66,8 +66,10 @@ var SelectScene = function () {
   background.image = game.assets[img_path];
   scene.addChild(background)
 
+  /*
   var backbutton = makeImg(backbutton_param);
   scene.addChild(backbutton);
+  */
 
   // ステージ選択用の(透明)ボタンを配置
   var button_width = Math.floor(SCREEN_WIDTH/ LAST_STAGE);    //  各ボタンの幅
