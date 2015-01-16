@@ -79,13 +79,14 @@ var createNovelScene = function(stage_id) {
             scene.addChild(cut_in);
             cut_in.tl.moveTo(0, SCREEN_HEIGHT * 0.1, 3, enchant.Easing.QUAD_EASEOUT);
             select_sound.play();
+            //  waitするとthis使えないので。
+            var id  = this.id;
+            var ans = this.ans;
             $.wait(500).done(function(){
-              if (this.id == this.ans) {
-                console.log("select_box_list: " + this.id + " is cliced. true");
+              if (id == ans) {
                 correct_sound.play();
                 comment_box.setup_status(1, correct_sound); // 正解
               } else {
-                console.log("select_box_list: " + this.id + " is cliced. false");
                 wrong_sound.play();
                 comment_box.setup_status(0, wrong_sound); //不正解
                 strage.failed_ans = 1;  // 1問でも失敗した
@@ -113,7 +114,6 @@ var createNovelScene = function(stage_id) {
     scene.removeChild(cut_in);
     select_sound.stop();
     this.sound.stop();
-    console.log("comment_box: this.status: " + this.status);
     if (this.status == 1) {
       // 正解
       next = getNextId(now, 1);
@@ -192,7 +192,6 @@ var setContext = {
 
   //----- エンディングシーン -----
   var createEndingScene = function() {
-    console.log("createEndingScene");
     var scene = new Scene();
     var background = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
     // 背景
