@@ -41,6 +41,10 @@ var makeLabel = function(param) {
   return label;
 };
 
+var makeSound = function(path) {
+  return game.assets[path];
+};
+
 // 問題の選択肢を入れておくボックス
 var SelectBox = Class.create(Group, {
   initialize: function(id) {
@@ -126,11 +130,12 @@ var CommentBox = Class.create(Group, {
     this.addChild(this.box);
     this.addChild(this.comment);
   },
-  setup_status: function(status) {
+  setup_status: function(status, sound_assets) {
     // status = 0 不正解
     //        = 1 正解
     //        = -1 不定
     this.status = status;
+    this.sound  = sound_assets;
   },
   setup_text: function(text) {
     console.log("comment.setup_text: " + text);
