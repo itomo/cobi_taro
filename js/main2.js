@@ -13,6 +13,7 @@ var createNovelScene = function(stage_id) {
   var character       = makeImg(param.default_chara);
   var text            = makeLabel(param.default_nobel_text);  // 問題分とか
   var kick_button     = makeImg(param.default_kick_button);
+  var cut_in          = makeImg(param.default_cut_in);
 
   var select_box_list = {};
   for (var i = 1; i <= 4; i++) {
@@ -71,16 +72,21 @@ var createNovelScene = function(stage_id) {
         setScene.question_scene(stage_id, next, background, character, text, select_box_list, comment_box);
         for (var i = 1; i <= 4; i++) {
           select_box_list[i].ontouchstart = function() {
-            if (this.id == this.ans) {
-              console.log("select_box_list: " + this.id + " is cliced. true");
-              comment_box.setup_status(1); // 正解
+            setContext.cut_in(cut_in);
+            scene.addChild(cut_in);
+            cut_in.tl.moveTo(0, SCREEN_HEIGHT * 0.1, 3, enchant.Easing.QUAD_EASEOUT);
+            $.wait(500).done(function(){
+              if (this.id == this.ans) {
+                console.log("select_box_list: " + this.id + " is cliced. true");
+                comment_box.setup_status(1); // 正解
 
-            } else {
-              console.log("select_box_list: " + this.id + " is cliced. false");
-              comment_box.setup_status(0); //不正解
-              strage.failed_ans = 1;  // 1問でも失敗した
-            }
-            scene.addChild(comment_box);
+              } else {
+                console.log("select_box_list: " + this.id + " is cliced. false");
+                comment_box.setup_status(0); //不正解
+                strage.failed_ans = 1;  // 1問でも失敗した
+              }
+              scene.addChild(comment_box);
+            });
           };
 
           scene.addChild(select_box_list[i]); // ボックスを描画
@@ -99,6 +105,7 @@ var createNovelScene = function(stage_id) {
       scene.removeChild(select_box_list[i]);
     }
     scene.removeChild(this);
+    scene.removeChild(cut_in);
     console.log("comment_box: this.status: " + this.status);
     if (this.status == 1) {
       // 正解
@@ -169,6 +176,10 @@ var setContext = {
   question: function(stage_id, id, text) {
     // 問題文を表示
     text.text = assets.stage[stage_id][id]['question'][0];
+  },
+  cut_in: function (obj) {
+    obj.x = SCREEN_WIDTH;
+    obj.y = SCREEN_HEIGHT * 0.3;
   }
 };
 
