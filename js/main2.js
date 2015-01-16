@@ -79,13 +79,16 @@ var createNovelScene = function(stage_id) {
             scene.addChild(cut_in);
             cut_in.tl.moveTo(0, SCREEN_HEIGHT * 0.1, 3, enchant.Easing.QUAD_EASEOUT);
             select_sound.play();
+            //  waitするとthis使えないので。
+            id  = this.id;
+            ans = this.ans;
             $.wait(500).done(function(){
-              if (this.id == this.ans) {
-                console.log("select_box_list: " + this.id + " is cliced. true");
+              if (id == ans) {
+                console.log("select_box_list: " + id + " is cliced. true");
                 correct_sound.play();
                 comment_box.setup_status(1, correct_sound); // 正解
               } else {
-                console.log("select_box_list: " + this.id + " is cliced. false");
+                console.log("select_box_list: " + id + " is cliced. false");
                 wrong_sound.play();
                 comment_box.setup_status(0, wrong_sound); //不正解
                 strage.failed_ans = 1;  // 1問でも失敗した
