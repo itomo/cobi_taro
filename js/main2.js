@@ -5,6 +5,7 @@ var createNovelScene = function(stage_id) {
   var now             = 1; // 現在のscene id
   var next            = 0;
   var text_id         = 0; // 現在表示中のセリフ番号
+  var stage_end       = false;
 
   // objects
   var scene           = new Scene();
@@ -52,11 +53,14 @@ var createNovelScene = function(stage_id) {
       // 次の会話シーン(assets.stage[stage_id][next])を描画
 
       if (isLastStage(stage_id, now)) {
+        stage_end = true;
         if (strage.failed_ans == 1) {
           // 1問でも不正解
           next = getNextId(now, 2);
         } else {
           // 全問正解
+//          checkOpenStage();
+          strage.open_stage += 1;
           next = getNextId(now, 1);
         }
       } else {
@@ -99,7 +103,11 @@ var createNovelScene = function(stage_id) {
         };
 
       } else {
-        setScene.normal_scene(stage_id, next, background, character, text);
+        if (stage_end) {
+          game.replaceScene(SelectScene());
+        } else {
+          setScene.normal_scene(stage_id, next, background, character, text);
+        }
       }
     }
   };
@@ -312,7 +320,7 @@ var setContext = {
     game.preload(SE_SOUND_3);
 
     game.onload = function() {
-      game.fps = 12;
+      game.fps = 16;
       //      game.replaceScene(createEndingScene());
       game.replaceScene(createTitleScene());
     };

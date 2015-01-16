@@ -82,7 +82,7 @@ window.param = {
   default_cut_in: {
     'width'  : 2024,
     'height' : 768,
-    'pic_url': "img/stage/cutin.png",
+    'pic_url': "img/stage/cutin.jpg",
     'x'      : SCREEN_WIDTH,
     'y'      : SCREEN_HEIGHT * 0.1
   }
