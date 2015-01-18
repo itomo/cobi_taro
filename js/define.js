@@ -42,7 +42,8 @@ var KOBI_SOUND = SOUND_DIR + "/cobi.mp3";
 // 人物画像のディレクトリ
 var CHARACTER_PIC_DIR = IMG_DIR + "/chara";
 
-var STAGE_IMG_CUTIN = STAGE_IMG_DIR + "/cutin.png";
+//var STAGE_IMG_CUTIN = STAGE_IMG_DIR + "/cutin.png";
+var STAGE_IMG_CUTIN = STAGE_IMG_DIR + "/cutin.jpg";
 var KOBI_SOUND = SOUND_DIR + "/cobi.mp3";
 var SE_SOUND_1 = SOUND_DIR + "/se_01.mp3";
 var SE_SOUND_2 = SOUND_DIR + "/se_02.mp3";
