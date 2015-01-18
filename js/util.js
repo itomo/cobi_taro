@@ -11,19 +11,6 @@ var makeImg = function(param) {
   var y       = param['y'];
   var img = new Sprite(size_x, size_y);
 
-  /*
-  //  拡大縮小
-  //  ここでやるとなぜかステージ選択画面のアニメーションが動かない。
-  var scaleX  = param['scaleX'];
-  var scaleY  = param['scaleY'];
-  if (scaleX != "") {
-      img.scaleX = scaleX;
-  }
-  if (scaleY != "") {
-      img.scaleY = scaleY;
-  }
-  */
-
   // pic_urlが空文字でないなら、imageを配置する
   if (pic_url != "" && pic_url != "null") {
     img.image = game.assets[pic_url];
