@@ -5,7 +5,7 @@ window.assets = (function(){
 
   // stage番号と合わせる
   // そのステージの最終結果を描画するシーン番号
-  assets.laststage = [0, 14, 12, 12, 12];
+  assets.laststage = [0, 14, 13, 12, 12];
 
   assets.stage = {};
   assets.stage_pic = {};
