@@ -203,19 +203,35 @@ var getNextId = function(now, branch) {
   return next_id;
 };
 
-// 最終ステージか確認する
+// ステージの最終結果を伝えるシーンかどうか確認する
+// １つ手前 -> true
 var isLastStage = function(stage_id, now) {
   var now_id = now;
   var now_id_num;
   if (is('String', now_id) != true) {
     now_id = now_id + '';
   }
-  now_id_num = now_id.replace(/-.*/, '');
+  now_id_num = now_id.replace(/-.*/, '');// 13-1 とかを13に変える
 
   if (is('Number', now_id_num) != true) {
     now_id_num = Number(now_id_num);
   }
   if (now_id_num == assets.laststage[stage_id]) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+var isStageEnd = function(stage_id, now) {
+  var now_id = now;
+  var end_id_1 = assets.laststage[stage_id] + '-1';
+  var end_id_2 = assets.laststage[stage_id] + '-2';
+  if (is('String', now_id) != true) {
+    now_id = now_id + ''; // Stirng化
+  }
+  console.log('isStageEnd? now_id: ' + now_id + " end_id_1: " + end_id_1 + " end_id_2 " + end_id_2);
+  if (now_id == end_id_1 || now_id == end_id_2) {
     return true;
   } else {
     return false;

@@ -50,22 +50,24 @@ var createNovelScene = function(stage_id) {
       text_id += 1;
 
     } else {
-      // 次の会話シーン(assets.stage[stage_id][next])を描画
 
-      if (isLastStage(stage_id, now)) {
-        stage_end = true;
+      // ステージの最終結果を伝えるシーンだった場合は、ステージ選択画面へ
+      if (isStageEnd(stage_id, now)) {
+        game.replaceScene(SelectScene());
+      }
+
+      // 次の会話シーン(assets.stage[stage_id][next])を描画
+      next = getNextId(now, 0);
+      if (isLastStage(stage_id, next)) {
         if (strage.failed_ans == 1) {
           // 1問でも不正解
-          next = getNextId(now, 2);
+          next = getNextId(next, 2);
         } else {
           // 全問正解
-//          checkOpenStage();
+          //          checkOpenStage();
           strage.open_stage += 1;
-          next = getNextId(now, 1);
+          next = getNextId(next, 1);
         }
-      } else {
-        // 次は通常の問題文のシーン
-        next = getNextId(now, 0);
       }
       now  = next;
       text_id = 0;
@@ -103,11 +105,7 @@ var createNovelScene = function(stage_id) {
         };
 
       } else {
-        if (stage_end) {
-          game.replaceScene(SelectScene());
-        } else {
           setScene.normal_scene(stage_id, next, background, character, text);
-        }
       }
     }
   };

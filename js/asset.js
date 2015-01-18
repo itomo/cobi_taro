@@ -4,7 +4,8 @@ window.assets = (function(){
   var assets = new Module();
 
   // stage番号と合わせる
-  assets.laststage = [0, 13, 12, 12, 12];
+  // そのステージの最終結果を描画するシーン番号
+  assets.laststage = [0, 14, 12, 12, 12];
 
   assets.stage = {};
   assets.stage_pic = {};
