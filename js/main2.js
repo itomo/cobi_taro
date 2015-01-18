@@ -28,6 +28,10 @@ var createNovelScene = function(stage_id) {
   // 問題を間違えていないかフラグを初期化
   strage.failed_ans = 0;
 
+  //  ステージ選択画面のアニメーションが動かなくなるのでここで拡大設定
+  character.scaleX = CHARACTER_PIC_X_SCALE;
+  character.scaleY = CHARACTER_PIC_Y_SCALE;
+
   // 描画
   scene.addChild(background);
   scene.addChild(character);

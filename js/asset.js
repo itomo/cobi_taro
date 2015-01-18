@@ -44,7 +44,9 @@ window.param = {
     'height' : CHARACTER_PIC_HEIGHT,
     'pic_url': "null",
     'x'      : CHARACTER_PIC_X_POINT,
-    'y'      : CHARACTER_PIC_Y_POINT
+    'y'      : CHARACTER_PIC_Y_POINT,
+//    'scaleX' : CHARACTER_PIC_X_SCALE,
+//    'scaleY' : CHARACTER_PIC_Y_SCALE
   },
   default_nobel_text: {
     'width'  : SCREEN_WIDTH * 0.9,

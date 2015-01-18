@@ -9,15 +9,15 @@ var SCREEN_HEIGHT = 1536;
 var CENTER_X_POINT = SCREEN_WIDTH/2;
 var CENTER_Y_POINT = SCREEN_HEIGHT/2;
 // 人物の画像サイズ(漫画カメラの解像度)
-var CHARACTER_PIC_WIDTH   = 520;
-var CHARACTER_PIC_HEIGHT  = 748;
+var CHARACTER_PIC_WIDTH   = 480;
+var CHARACTER_PIC_HEIGHT  = 640;
 var CHARACTER_PIC_X_POINT = 800;
 var CHARACTER_PIC_Y_POINT = 250;
 var CHARACTER_PIC_X_SCALE = 1.3;
 var CHARACTER_PIC_Y_SCALE = 1.3;
 
 var IMG_DIR        = "img";
-var SOUND_DIR  = "sound";
+var SOUND_DIR      = "sound";
 var TITLE_IMG_DIR  = IMG_DIR + "/title";
 var SELECT_IMG_DIR = IMG_DIR + "/select";
 var STAGE_IMG_DIR  = IMG_DIR + "/stage";
