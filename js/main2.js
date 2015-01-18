@@ -160,24 +160,24 @@ var setContext = {
   background: function (stage_id, id, background) {
     // 背景データが入っていたら切り替え
     var pic_url = '';
-    if (assets.stage_pic[stage_id][id] != undefined) {
-      if (assets.stage_pic[stage_id][id]['background'] != '') {
+    if (assets.stage[stage_id][id] != undefined) {
+      if (assets.stage[stage_id][id]['background'] != '') {
         console.log("setContext.background: stage_id: " + stage_id + " id: " + id);
-        console.log("setContext.background: " + game.assets["img/stage/" + assets.stage_pic[stage_id][id]['background']]);
-        background.image = game.assets["img/stage/" + assets.stage_pic[stage_id][id]['background']];
+        console.log("setContext.background: " + game.assets["img/stage/" + assets.stage[stage_id][id]['background']]);
+        background.image = game.assets["img/stage/" + assets.stage[stage_id][id]['background']];
       }
     }
   },
   character: function (stage_id, id, character) {
     var pic_url = '';
     // 人物データが入っていたら切り替え
-    if (assets.stage_pic[stage_id][id] != undefined) {
-      if (assets.stage_pic[stage_id][id]['character'] != '') {
+    if (assets.stage[stage_id][id] != undefined) {
+      if (assets.stage[stage_id][id]['character'] != '') {
         // img/chara/null.png は、透明な画像
-        if (assets.stage_pic[stage_id][id]['character'] == "null") {
+        if (assets.stage[stage_id][id]['character'] == "null") {
           pic_url = "img/chara/null.png";
         } else {
-          pic_url = "img/chara/" + assets.stage_pic[stage_id][id]['character'];
+          pic_url = "img/chara/" + assets.stage[stage_id][id]['character'];
         }
         character.image = game.assets[pic_url];
       }
