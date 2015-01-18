@@ -61,7 +61,8 @@ def separate_scene_info(scene_info)
     else
       case before_key
       when "serif", "question", "comment"
-        ret[before_key] << line
+        tmp = line.gsub('　', '')
+        ret[before_key] << tmp
       when "select"
         key, value = line.split(" ")
         ret[before_key][key] = value
@@ -82,14 +83,11 @@ def separate_scene_info(scene_info)
   ret
 end
 
-
-
-# src_dir以下のファイル一覧取得
-file_list = Dir.glob("#{src_dir}/*")
-
 file_list = [
-  "#{src_dir}/game_data_20150110/transed_stage1.txt"
-  #"#{src_dir}/game_data_20150110/stage1_utf.txt"
+  "#{src_dir}/game_data_20150110/transed_stage1.txt",
+  "#{src_dir}/game_data_20150110/transed_stage2.txt",
+  "#{src_dir}/game_data_20150110/transed_stage3.txt",
+  "#{src_dir}/game_data_20150110/transed_stage4.txt"
 ]
 
 file_list.each do |file|
@@ -101,32 +99,8 @@ file_list.each do |file|
     ret[id] = separate_scene_info(info)
   end
 
-  File.write("#{dist_dir}/stage1.json", JSON.pretty_generate(ret))
+  output_name =  File.basename(file).gsub('transed_', '').gsub('.txt', '')
+
+  File.write("#{dist_dir}/#{output_name}.json", JSON.generate(ret))
+  File.write("#{dist_dir}/#{output_name}.json_prety", JSON.pretty_generate(ret))
 end
-
-
-# # データファイルを読み込み、parseする
-# file_list.each do |file|
-#   next unless File.file?(file)
-#   src = File.open(file).read
-
-#   tmp = file.split("/").last
-#   if tmp =~ /_pic/
-#     next;
-#   end
-
-#   puts file
-
-#   ret = {}
-#   scene_list = split_scene(src)
-#   scene_list.each do |id, info|
-#     ret[id] = separate_scene_info(info)
-#   end
-
-#   output_file = dist_dir + "/" + file.split("/").last.gsub(/\.txt/, '') + ".json"
-#   File.write(output_file, JSON
-#                .generate(ret))
-# end
-
-
-
