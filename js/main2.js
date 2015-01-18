@@ -64,8 +64,7 @@ var createNovelScene = function(stage_id) {
           next = getNextId(next, 2);
         } else {
           // 全問正解
-          //          checkOpenStage();
-          strage.open_stage += 1;
+          openNewStage(stage_id);
           next = getNextId(next, 1);
         }
       }

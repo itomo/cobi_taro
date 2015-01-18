@@ -223,6 +223,7 @@ var isLastStage = function(stage_id, now) {
   }
 };
 
+// 最終結果を伝えるシーンかどうか
 var isStageEnd = function(stage_id, now) {
   var now_id = now;
   var end_id_1 = assets.laststage[stage_id] + '-1';
@@ -235,5 +236,13 @@ var isStageEnd = function(stage_id, now) {
     return true;
   } else {
     return false;
+  }
+};
+
+// 開放されているシーンがどのくらいか調べる
+var openNewStage = function(stage_id) {
+  if (stage_id == strage.open_stage) {
+    // 現在実行中のステージが開放されている最も新しいステージなら、次のステージを開放
+    strage.open_stage += 1;
   }
 };
