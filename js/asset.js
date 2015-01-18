@@ -15,11 +15,7 @@ window.assets = (function(){
     pic_file_name = "data/stage" + stage_id + "_pic.json";
     $.getJSON(file_name, function(data) {
       assets.stage[stage_id] = data;
-      $.getJSON(pic_file_name, function(data) {
-        assets.stage_pic[stage_id] = data;
-        //スタート時に呼ばれるだけと想定
-        return callback(stage_id, 1, assets.stage[stage_id][1]);
-      });
+      return callback(stage_id, 1, assets.stage[stage_id][1]);
     });
   };
 
